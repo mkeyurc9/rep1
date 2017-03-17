@@ -78,7 +78,75 @@
                         @endforeach
                     </div>
                 </div>
-               
+                <div class="form-group">
+                    <label class="control-label col-md-3">Exclude Companies
+                    </label>
+                    <div class="col-md-4">
+                        <input name="exclude_company"  value="{{old('exclude_company')}}" type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Authorized to work in US
+                    </label>
+                    <div class="radio">
+                        <label><input type="radio" name="authorized_to_work_in_us" value="1" checked>Yes</label>
+                        <label><input type="radio" name="authorized_to_work_in_us" value="0">No</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Need Sponsorship for employment Visa status
+                    </label>
+                    <div class="radio">
+                        <label><input type="radio" name="need_sponsorship_for_employment_visa_status" value="1" checked>Yes</label>
+                        <label><input type="radio" name="need_sponsorship_for_employment_visa_status" value="0">No</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Relocation required ?
+                    </label>
+                    <div class="radio">
+                        <label><input type="radio" name="relocation_required" value="1" checked>Yes</label>
+                        <label><input type="radio" name="relocation_required" value="0">No</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Willing to relocate ?
+                    </label>
+                    <div class="radio">
+                        <label><input type="radio" name="willing_to_relocate" value="1" checked>Yes</label>
+                        <label><input type="radio" name="willing_to_relocate" value="0">No</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Status
+                    </label>
+                    <div class="radio">
+                        <label><input type="radio" name="status" value="pending" checked>Pending</label>
+                        <label><input type="radio" name="status" value="active">Active</label>                       
+                        <label><input type="radio" name="status" value="processed">Processed</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Resume
+                    </label>
+                    <div class="col-md-4">
+                        <input name="resume" type="file" id="resumeInputFile" >
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" name="cmdSubmit" value="submit" class="btn green">Submit</button>
+                            <a href="{{url('/home')}}" class="btn grey-salsa btn-outline">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form> 
+
+    </div>
+</div>
 <script>
 
 $(document).ready(function ()
