@@ -21,6 +21,14 @@
             </div>
             @endif
             <div class="form-body">
+                 <div class="form-group">
+                    <label class="control-label col-md-3">Profile 
+                    </label>
+                    <div class="radio">
+                        <label><input type="radio" name="profile_status" value="A" checked>Active</label>
+                        <label><input type="radio" name="profile_status" value="I" @if(!is_null($candidate_profile) && $candidate_profile['profile_status']=='I') checked @endif>Deactivate</label>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="control-label col-md-3">Actively looking 
                     </label>
