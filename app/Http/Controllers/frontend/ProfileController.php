@@ -24,10 +24,13 @@ class ProfileController extends Controller {
         $candidate_domains = \DB::table('domains')->whereIn('id', $arr_domains)->get();
         $arr_interest = explode(',',$candidate_profile['pm_id']);
         $interest_in = \DB::table('product_management_type')->whereIn('id', $arr_interest)->get(); 
+        $pm_exp = $candidate_profile['pm_experiance_in_years']; 
         
         $domains = \DB::table('domains')->get(['name', 'id']);
         $product_management_type = \DB::table('product_management_type')->get(['name', 'id']);
-        return view('frontend.candidate_profile.view_profile', ['domains' => $domains, 'product_management_type' => $product_management_type,'candidate_profile' => $candidate_profile,'candidate_domains' => $candidate_domains,'interests' => $interest_in]);
+        $pm_experiences = \DB::table('pm_experience')->get(['name', 'id']);
+        
+        return view('frontend.candidate_profile.view_profile', ['domains' => $domains, 'product_management_type' => $product_management_type,'candidate_profile' => $candidate_profile,'candidate_domains' => $candidate_domains,'interests' => $interest_in,'pm_exp'=> $pm_exp, 'pm_experiences'=>$pm_experiences]);
     }
 
     /**
@@ -83,15 +86,15 @@ class ProfileController extends Controller {
 
         $check_candidate = CandidateProfile::where('profile_candidate_id', $data['id'])->first();
         if ($check_candidate) {
-            unset($check_candidate['updated_at'], $check_candidate['id']);
-            $check_candidate['updated_at'] = date('Y-m-d H:i:s');
+            unset($check_candidate['id']);
+            $check_candidate['audit_created_at'] = date('Y-m-d H:i:s');
             $check_candidate = $check_candidate->toArray();
             \DB::table('candidate_profile_audit')->insert([$check_candidate]);
             CandidateProfile::where('profile_candidate_id', $data['id'])->update($candidate_profile);
         } else {
             CandidateProfile::insert($candidate_profile);
         }
-        return redirect('view_profile_candidate');
+        return redirect('view_profile');
     }
 
     function view_profile(Request $request) {
@@ -99,11 +102,12 @@ class ProfileController extends Controller {
         $candidate_profile = CandidateProfile::where('profile_candidate_id', $data['id'])->first();
 //        print_r($candidate_profile->toArray());exit;
 //        \DB::enableQueryLog();
+        $pm_experience = \DB::table('pm_experience')->where('id', $candidate_profile['pm_experiance_in_years'])->first();
         $arr_domains = explode(',',$candidate_profile['domains_id']);
         $domains = \DB::table('domains')->whereIn('id', $arr_domains)->get();
         $arr_interest = explode(',',$candidate_profile['pm_id']);
         $interest_in = \DB::table('product_management_type')->whereIn('id', $arr_interest)->get();
-        return view('frontend.candidate_profile.display_profile', ['candidate_profile' => $candidate_profile,'domains' => $domains,'interests' => $interest_in]);
+        return view('frontend.candidate_profile.display_profile', ['candidate_profile' => $candidate_profile,'domains' => $domains,'interests' => $interest_in,'pm_experience'=>$pm_experience]);
     }
 
 }

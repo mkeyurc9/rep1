@@ -29,7 +29,8 @@ Route::get('view_login','Auth\RegisterController@view_login');
 Route::post('user_login','Auth\RegisterController@user_login');
 
 Route::group(['middleware'=>['checkAuth']],function(){
-    Route::get('view_profile','frontend\ProfileController@index');
+    Route::get('edit_profile','frontend\ProfileController@index');
     Route::post('insert_candidate_profile','frontend\ProfileController@create');
-    Route::get('view_profile_candidate','frontend\ProfileController@view_profile');
+    Route::get('view_profile','frontend\ProfileController@view_profile');
+    Route::get('user_logout','Auth\RegisterController@user_logout');
 });

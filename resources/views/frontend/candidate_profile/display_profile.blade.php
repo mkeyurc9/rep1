@@ -24,6 +24,9 @@
                     <div>
                         @foreach($interests as $interest)
                         {{$interest->name}}
+                        @if (!$loop->last)
+                        {{ '&nbsp;&nbsp;|&nbsp;&nbsp;' }}
+                        @endif
                         @endforeach
                     </div>
                 </div>
@@ -31,7 +34,7 @@
                     <label class="control-label col-md-3">PM experience in years
                     </label>
                     <div class="radio">
-                        <label>{{$candidate_profile['pm_experiance_in_years']}}</label>
+                        <label>{{$pm_experience->name}}</label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -52,8 +55,11 @@
                     <label class="control-label col-md-3">Domains
                     </label>
                     <div class="checbox col-md-8">
-                       @foreach($domains as $domain)
+                        @foreach($domains as $domain)
                         {{$domain->name}}
+                         @if (!$loop->last)
+                        {{ '&nbsp;&nbsp;|&nbsp;&nbsp;' }}
+                        @endif
                         @endforeach
                     </div>
                 </div>
@@ -106,14 +112,6 @@
                         <a href="{{ asset('/upload_resume/'.$candidate_profile['resume'])}}" target="_blank">View Resume</a>
                     </div>
                 </div>
-                <div class="form-actions">
-                    <div class="row">
-                        <div class="col-md-offset-3 col-md-9">
-                            <a href="{{url('view_profile')}}" class="btn grey-salsa btn-outline">Back</a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </form> 
 

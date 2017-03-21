@@ -49,26 +49,24 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/home') }}">Home</a></li>
-                    </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if(Session::has('email'))
-                        <li class="dropdown">
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="{{ url('user_logout') }}">Sign Out</a></li>
+                        @if(Request::path()=='edit_profile')
+                        <li><a href="{{ url('view_profile') }}">View Profile</a></li>
+                        @elseif(Request::path()=='view_profile')
+                        <li><a href="{{ url('edit_profile') }}">Edit Profile</a></li>
+                        @else
+                        <li><a href="{{ url('edit_profile') }}">Profile</a></li>
+                        @endif
                         @else
                         <li><a href="{{ url('view_login') }}">Sign in</a></li>
                         <li><a href="{{ url('/home#sign-up') }}">Sign up</a></li>
                         @endif
                         <li><a href="{{ url('/home#about-us') }}">About Us</a></li>
                         <li><a href="{{ url('/home#work-flow') }}">Workflow</a></li>
-                        <li><a href="{{ url('view_profile') }}">View Profile</a></li>
                     </ul>
                 </div>
             </div>
