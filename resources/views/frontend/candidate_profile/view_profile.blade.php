@@ -10,6 +10,7 @@
     <div class="portlet-body">
         <form method="post" class="form-horizontal" id="candidate_profile_add" action="{{url('insert_candidate_profile')}}" enctype="multipart/form-data" files=true>
             {{ csrf_field() }}
+            
             @if (count($errors) > 0)
             <div class="alert alert-danger">
                 <ul>
@@ -58,10 +59,20 @@
                     <label class="control-label col-md-3">PM experience in years
                     </label>
                     <div class="radio">
-                        <label><input type="radio" value="0-1" name="pm_experience_in_years" checked>0-1</label>
-                        <label><input type="radio" value="1-2" name="pm_experience_in_years" @if($candidate_profile['pm_experiance_in_years']=='1-2') checked @endif>1-2</label>
-                        <label><input type="radio" value="2-4" name="pm_experience_in_years" @if($candidate_profile['pm_experiance_in_years']=='2-4') checked @endif>2-4</label>
-                        <label><input type="radio" value="4+" name="pm_experience_in_years" @if($candidate_profile['pm_experiance_in_years']=='4+') checked @endif>4+</label>
+                        
+                        @foreach($pm_experiences as $pm_experience)
+                                @php
+                                    $checked='';
+                                @endphp
+                                
+                                @if($pm_exp == $pm_experience->id)
+                                    @php
+                                        $checked='checked';
+                                    @endphp
+                                @endif
+                              
+                                <label><input type="radio" value="{{$pm_experience->id}}" name="pm_experience_in_years" {{$checked}} >{{$pm_experience->name}}</label>
+                        @endforeach        
                     </div>
                 </div>
                 <div class="form-group">
@@ -143,10 +154,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3">Resume
+                    <label class="control-label col-md-3">Resume <br><span style="font-weight: lighter;">(File extension must be either pdf, doc, or docx)</span>
                     </label>
                     <div class="col-md-4">
-                        <input name="resume" type="file" id="resumeInputFile" >
+                        <div><input name="resume" type="file" id="resumeInputFile" ></div>
                     </div>
                 </div>
                 <div class="form-actions">
@@ -207,7 +218,7 @@ $(document).ready(function ()
                },
             resume:{
                   required:"Please upload Resume",                  
-                  extension:"Select valid input file format"
+                  extension:"Please only select pdf, doc, or docx file"
                   },
             exclude_company: {required: "Please Enter Exclude Companies"},
         }

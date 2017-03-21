@@ -257,4 +257,9 @@ class RegisterController extends Controller
         }
         return redirect('/home');
     }
+    
+    function user_logout(Request $request){
+       $request->session()->flush();
+       return redirect('/home');
+    }
 }
