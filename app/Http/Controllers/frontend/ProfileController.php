@@ -66,6 +66,7 @@ class ProfileController extends Controller {
             $status = 'pending';
         }
         $candidate_profile = array(
+            'profile_status' => $request['profile_status'],
             'actively_looking' => $request['actively_looking'],
             'pm_id' => $pm_id,
             'profile_candidate_id' => $data['id'],

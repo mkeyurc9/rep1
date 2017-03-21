@@ -12,6 +12,13 @@
             {{ csrf_field() }}
             <div class="form-body">
                 <div class="form-group">
+                    <label class="control-label col-md-3">Profile Status
+                    </label>
+                    <div class="radio">
+                        <label> @if($candidate_profile['peofile_status']== 'A') Active @else Deactivate @endif</label>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="control-label col-md-3">Actively looking 
                     </label>
                     <div class="radio">
