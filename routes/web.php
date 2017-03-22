@@ -35,11 +35,12 @@ Route::group(['middleware'=>['checkAuth:candidate']],function(){
     Route::get('view_matched_jobs','frontend\MatchingAlgoController@index');
     Route::get('display_job_description/{id}','frontend\MatchingAlgoController@job_description');
     Route::post('update_candidate_job_status/{id}','frontend\MatchingAlgoController@update_candidate_job_status');
-    Route::get('user_logout','Auth\RegisterController@user_logout');
+//    Route::get('user_logout','Auth\RegisterController@user_logout');
 });
 
 Route::group(['middleware'=>['checkAuth:employer']],function(){
     Route::get('add_job','employer_frontend\JobController@create');
     Route::post('store_job','employer_frontend\JobController@store_job');
-    Route::get('user_logout','Auth\RegisterController@user_logout');
+
 });
+ Route::get('user_logout','Auth\RegisterController@user_logout');
