@@ -28,13 +28,17 @@
                 </tr>
             </thead>
             <tbody id="tbody_filter">
+                @if($matching_algo->toArray()['total']==0)
+                    <tr><td>No Data Available</td></tr>
+                @else
                 @foreach($matching_algo as $mat_algo)
                 <tr>
                     <td><a href="{{url("display_job_description/".$mat_algo['job_id'])}}">{{$mat_algo['employer_signup']->company_name}}</a></td>
                     @if($mat_algo['candidate_status']=='P')<td> Pending</td>@elseif($mat_algo['candidate_status']=='N')<td> Null</td> @elseif($mat_algo['candidate_status']=='A') <td>Active</td> @else <td>Processed</td> @endif
                 </tr>
                 @endforeach
-            </tbody>
+                @endif
+            </tbody>            
         </table>
         {{ $matching_algo->links() }}
     </div>
