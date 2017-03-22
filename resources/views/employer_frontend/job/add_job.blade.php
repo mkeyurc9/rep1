@@ -1,14 +1,9 @@
 @include('layouts.app')
-<style>
-    .gameplay-baseball-field {
-        margin-left: 341px;
-    }
-</style>
 <script src="{{asset("/plugins/jquery-validation/js/jquery.validate.min.js")}}" type="text/javascript"></script>
 <script src="{{asset("/plugins/jquery-validation/js/additional-methods.min.js")}}" type="text/javascript"></script>
 <div class="row">
     <div class="portlet-body">
-        <form method="post" class="form-horizontal" id="candidate_profile_add" action="{{url('insert_candidate_profile')}}" enctype="multipart/form-data" files=true>
+        <form method="post" class="form-horizontal" id="frm_job_add" action="{{url('store_job')}}">
             {{ csrf_field() }}
             
             @if (count($errors) > 0)
@@ -21,24 +16,30 @@
             </div>
             @endif
             <div class="form-body">
-                 <div class="form-group">
-                    <label class="control-label col-md-3">Profile 
+                <div class="form-group">
+                    <label class="control-label col-md-3">Withdraw Job Submission
                     </label>
                     <div class="radio">
-                        <label><input type="radio" name="profile_status" value="A" checked>Active</label>
-                        <label><input type="radio" name="profile_status" value="I" @if(!is_null($candidate_profile) && $candidate_profile['profile_status']=='I') checked @endif>Deactivate</label>
+                        <label><input type="radio" name="withdraw_job_submission" value="1">Yes</label>
+                        <label><input type="radio" name="withdraw_job_submission" value="0" checked>No</label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3">Actively looking 
+                    <label class="control-label col-md-3">Job Title
                     </label>
-                    <div class="radio">
-                        <label><input type="radio" name="actively_looking" value="1" checked>Yes</label>
-                        <label><input type="radio" name="actively_looking" value="0" @if(!is_null($candidate_profile) && $candidate_profile['actively_looking']==0) checked @endif>No</label>
+                    <div class="col-md-4">
+                        <input name="job_title" value="" type="text" id="job_title" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3">Interested in
+                    <label class="control-label col-md-3">Job Location
+                    </label>
+                    <div class="col-md-4">
+                        <input name="job_location" value="" type="text" id="job_location" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Job Type
                     </label>
                     <div>
                         <div class="checbox">
@@ -47,40 +48,11 @@
                                     $checked='';
                                 @endphp
                               
-                                @foreach($interests as $interest)
-                                    @if($pm->id == $interest->id)
-                                        @php
-                                            $checked='checked';
-                                        @endphp
-                                    @endif
-                                @endforeach
-                                                                
-                                
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="interest_in[]" {{$checked}} value="{{$pm->id}}">{{$pm->name}}
+                                    <input type="checkbox" name="job_type[]" value="{{$pm->id}}">{{$pm->name}}
                                 </label>
                             @endforeach
                         </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">PM experience in years
-                    </label>
-                    <div class="radio">
-                        
-                        @foreach($pm_experiences as $pm_experience)
-                                @php
-                                    $checked='';
-                                @endphp
-                                
-                                @if($pm_exp == $pm_experience->id)
-                                    @php
-                                        $checked='checked';
-                                    @endphp
-                                @endif
-                              
-                                <label><input type="radio" value="{{$pm_experience->id}}" name="pm_experience_in_years" {{$checked}} >{{$pm_experience->name}}</label>
-                        @endforeach        
                     </div>
                 </div>
                 <div class="form-group">
@@ -88,84 +60,38 @@
                     </label>
                     <div class="radio">
                         <label><input type="radio" name="job_level"  value="entry" checked>Entry</label>
-                        <label><input type="radio" name="job_level" value="mid_level" @if($candidate_profile['job_level']=='mid_level') checked @endif>Mid-level</label>
-                        <label><input type="radio" name="job_level" value="senior_level" @if($candidate_profile['job_level']=='senior_level') checked @endif>Senior level</label>
+                        <label><input type="radio" name="job_level" value="mid_level" >Mid-level</label>
+                        <label><input type="radio" name="job_level" value="senior_level" >Senior level</label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3">Expected Base Salary Per annum in USD
-                    </label>
+                    <label class="control-label col-md-3">Annual Salary range in USD</label>
                     <div class="col-md-4">
-                        <input name="expected_salary" value="{{$candidate_profile['expected_salary']}}" type="text" id="expected_salary" class="form-control" />
+                        <select class="form-control" name="annual_salary" id="annual_salary">
+                            <option value="">--Select--</option>
+                            <option value="60000-1000000">60000-100000</option>
+                            <option value="60000-1250000">60000-125000</option>
+                            <option value="125000-150000">125000-150000</option>
+                            <option value="150000+">150000+</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3">Domains
+                    <label class="control-label col-md-3">Preferred Domain experience
                     </label>
                     <div class="checbox col-md-8">
                         @foreach($domains as $domain)
-                                @php
-                                    $checked='';
-                                @endphp
-                              
-                                @foreach($candidate_domains as $candidate_domain)
-                                    @if($candidate_domain->id == $domain->id)
-                                        @php
-                                            $checked='checked';
-                                        @endphp
-                                    @endif
-                                @endforeach
-                        
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="domains[]" {{ $checked }} value="{{$domain->id}}">{{$domain->name}}
+                                    <input type="checkbox" name="domains[]" value="{{$domain->id}}">{{$domain->name}}
                                 </label>
                         @endforeach
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-3">Exclude Companies
+                    <label class="control-label col-md-3">Job Description
                     </label>
                     <div class="col-md-4">
-                        <input name="exclude_company"  value="{{$candidate_profile['exclude_companies']}}" type="text" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Authorized to work in US
-                    </label>
-                    <div class="radio">
-                        <label><input type="radio" name="authorized_to_work_in_us" value="1" checked>Yes</label>
-                        <label><input type="radio" name="authorized_to_work_in_us" value="0" @if(!is_null($candidate_profile) && $candidate_profile['authorized_to_work_in_us']==0) checked @endif >No</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Need Sponsorship for employment Visa status
-                    </label>
-                    <div class="radio">
-                        <label><input type="radio" name="need_sponsorship_for_employment_visa_status" value="1" checked>Yes</label>
-                        <label><input type="radio" name="need_sponsorship_for_employment_visa_status" value="0" @if(!is_null($candidate_profile) && $candidate_profile['need_sponsorship']==0) checked @endif >No</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Relocation required ?
-                    </label>
-                    <div class="radio">
-                        <label><input type="radio" name="relocation_required" value="1" checked>Yes</label>
-                        <label><input type="radio" name="relocation_required" value="0" @if(!is_null($candidate_profile) && $candidate_profile['relocation_required']==0) checked @endif>No</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Willing to relocate ?
-                    </label>
-                    <div class="radio">
-                        <label><input type="radio" name="willing_to_relocate" value="1" checked>Yes</label>
-                        <label><input type="radio" name="willing_to_relocate" value="0" @if(!is_null($candidate_profile) && $candidate_profile['willing_to_relocate']==0) checked @endif>No</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Resume <br><span style="font-weight: lighter;">(File extension must be either pdf, doc, or docx)</span>
-                    </label>
-                    <div class="col-md-4">
-                        <div><input name="resume" type="file" id="resumeInputFile" ></div>
+                        <textarea name="job_description" id="job_description" class="form-control" /></textarea>
                     </div>
                 </div>
                 <div class="form-actions">
@@ -186,49 +112,32 @@
 
 $(document).ready(function ()
 {
-    $('#candidate_profile_add').validate({
+    $('#frm_job_add').validate({
         errorElement: 'span', //default input error message container
         errorClass: 'help-block help-block-error', // default input error message class
         focusInvalid: false, // do not focus the last invalid input
         ignore: "", // validate all fields including form hidden input
         rules: {
-            expected_salary: {
+            job_title: {
+                required: true
+            },
+            job_location: {
+                required: true
+            },
+            "job_type[]":{
                 required: true,
-                number: true
-
+                minlength: 1
             },
-            resume:{
-                    required:true,
-                    extension: "pdf|docx|doc"
-                    },
-            "domains[]": { 
-                    required: true, 
-                    minlength: 1 
-            },
-            "interest_in[]":{
-                    required: true, 
-                    minlength: 1 
-            },
-            exclude_company: {
-                required: true,
-            }
-        },
-        messages: {
-            expected_salary: {
-                required: "Please Enter Expected Base Salary Per annum in USD ",
-                number: "Decimal Numbers Only"
+            annual_salary: {
+                required: true
             },
             "domains[]": {
-                required:"Please select at least one Domain." 
-                },
-               "interest_in[]":{
-                  required:"Please select at least one Interested in."    
-               },
-            resume:{
-                  required:"Please upload Resume",                  
-                  extension:"Please only select pdf, doc, or docx file"
-                  },
-            exclude_company: {required: "Please Enter Exclude Companies"},
+                    required: true, 
+                    minlength: 1 
+            },
+            job_description: {
+                required: true,
+            }
         }
     });
 });
