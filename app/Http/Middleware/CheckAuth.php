@@ -16,11 +16,11 @@ class CheckAuth
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $loggedutype)
     { 
        $email = session('email');
        $user_type = session('user_type');
-       if(!empty($email)){
+       if(!empty($email) && $user_type == $loggedutype){
            return $next($request);
        } 
        return redirect('view_login');

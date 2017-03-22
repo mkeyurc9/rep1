@@ -53,18 +53,19 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if(Session::has('email'))
-                        <li><a href="{{ url('user_logout') }}">Sign Out</a></li>
-                        <li><a href="{{ url('view_matched_jobs') }}">Matching Jobs</a></li>
-                        
-                        <li><a href="{{ url('add_job') }}"> Jobs </a></li>
-                        
-                        @if(Request::path()=='edit_profile')
-                        <li><a href="{{ url('view_profile') }}">View Profile</a></li>
-                        @elseif(Request::path()=='view_profile')
-                        <li><a href="{{ url('edit_profile') }}">Edit Profile</a></li>
-                        @else
-                        <li><a href="{{ url('edit_profile') }}">Profile</a></li>
-                        @endif
+                            <li><a href="{{ url('user_logout') }}">Sign Out</a></li>
+                            @if(Session('user_type') == 'candidate')
+                                <li><a href="{{ url('view_matched_jobs') }}">Matching Jobs</a></li>
+                                @if(Request::path()=='edit_profile')
+                                    <li><a href="{{ url('view_profile') }}">View Profile</a></li>
+                                @elseif(Request::path()=='view_profile')
+                                    <li><a href="{{ url('edit_profile') }}">Edit Profile</a></li>
+                                @else
+                                    <li><a href="{{ url('edit_profile') }}">Profile</a></li>
+                               @endif
+                            @else
+                                <li><a href="{{ url('add_job') }}"> Jobs </a></li>
+                            @endif
                         @else
                         <li><a href="{{ url('view_login') }}">Sign in</a></li>
                         <li><a href="{{ url('/home#sign-up') }}">Sign up</a></li>

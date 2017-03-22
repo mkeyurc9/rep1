@@ -249,11 +249,11 @@ class RegisterController extends Controller
                 return redirect('login');
             }else {
                 //employer session
-                session(['email'=> $email,'id'=>$employer['employer_id'], 'user_type'=> 'candidate']);
+                session(['email'=> $email,'id'=>$employer['employer_id'], 'user_type'=> 'employer']);
             }
         }else {
             //candidate session
-                session(['email'=> $email,'id'=>$candidate['candidate_id'], 'user_type'=> 'employer']);
+                session(['email'=> $email,'id'=>$candidate['candidate_id'], 'user_type'=> 'candidate']);
         }
         return redirect('/home');
     }
