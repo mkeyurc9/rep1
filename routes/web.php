@@ -32,5 +32,8 @@ Route::group(['middleware'=>['checkAuth']],function(){
     Route::get('edit_profile','frontend\ProfileController@index');
     Route::post('insert_candidate_profile','frontend\ProfileController@create');
     Route::get('view_profile','frontend\ProfileController@view_profile');
+    Route::get('view_matched_jobs','frontend\MatchingAlgoController@index');
+    Route::get('display_job_description/{id}','frontend\MatchingAlgoController@job_description');
+    Route::post('update_candidate_job_status/{id}','frontend\MatchingAlgoController@update_candidate_job_status');
     Route::get('user_logout','Auth\RegisterController@user_logout');
 });
