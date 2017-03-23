@@ -20,8 +20,8 @@ class JobController extends Controller
 
     function store_job(Request $request) {
         $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required'
+            'job_title' => 'required',
+            'job_description' => 'required'
         ]);
 
         $data = $request->session()->all();
