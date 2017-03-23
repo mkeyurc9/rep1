@@ -29,7 +29,7 @@
             </thead>
             <tbody id="tbody_filter">
                 @if($matching_algo->toArray()['total']==0)
-                    <tr><td>No Data Available</td></tr>
+                    <tr><td>No Matching Jobs Available</td></tr>
                 @else
                 @foreach($matching_algo as $mat_algo)
                 <tr>
@@ -53,7 +53,7 @@
             cache:false,
             type:'GET',
             success:function(data){ // this is view data returned by controller
-                alert(data);
+                console.log(data);
             $('#tbody_filter').html(data); // use it to fill your results
             }
         });

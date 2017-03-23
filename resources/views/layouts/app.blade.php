@@ -64,7 +64,8 @@
                                     <li><a href="{{ url('edit_profile') }}">Profile</a></li>
                                @endif
                             @else
-                                <li><a href="{{ url('add_job') }}"> Jobs </a></li>
+                                <li><a href="{{ url('add_job') }}">Add Jobs </a></li>
+                                <li><a href="javascript:void(0)">View Jobs </a></li>
                             @endif
                         @else
                         <li><a href="{{ url('view_login') }}">Sign in</a></li>

@@ -16,14 +16,14 @@
             </div>
             @endif
             <div class="form-body">
-                <div class="form-group">
+<!--                <div class="form-group">
                     <label class="control-label col-md-3">Withdraw Job Submission
                     </label>
                     <div class="radio">
                         <label><input type="radio" name="withdraw_job_submission" value="1">Yes</label>
                         <label><input type="radio" name="withdraw_job_submission" value="0" checked>No</label>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="control-label col-md-3">Job Title
                     </label>

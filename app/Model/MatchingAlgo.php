@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MatchingAlgo extends Model
 {
-    protected $table = 'matching_algo';
+    protected $table = 'matching_algo_status';
     protected $fillable = [
         'candidate_status','employer_status',
     ];
