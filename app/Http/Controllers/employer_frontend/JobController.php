@@ -35,7 +35,7 @@ class JobController extends Controller
             'title' => $request['job_title'],
             'description' => $request['job_description'],
             'employer_id' => $data['id'],
-            'withdraw_job_submission' => $request['withdraw_job_submission'],
+            'withdraw_job_submission' => $request['withdraw_job_submission']?$request['withdraw_job_submission']:0,
             'pm_id' => $pm_id,
             'domains_id' => $domains_id,
             'level' => $request['job_level'],
