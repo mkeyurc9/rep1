@@ -11,4 +11,7 @@ class Job extends Model
         'title','description','withdraw_job_submission','pm_id','domains_id','level',
         'annual_salary','location'
     ];
+    function employer_status(){
+        return $this->belongsTo('App\Model\MatchingAlgo','id','job_id');
+    }
 }

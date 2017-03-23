@@ -48,4 +48,16 @@ class JobController extends Controller
         JobDetails::insert($job_details);
         return redirect('/home');
     }
+    
+    function view_add_job(Request $request){
+        $data = $request->session()->all();
+//        $jobs = JobDetails::where('employer_id',$data['id'])
+//                            ->with('employer_status')
+//                            ->paginate(10);
+//        $jobs = \DB::raw("SELECT e.*, (SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'A'AND employer_status='A') as active_in_interview_phase,(SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'D'AND employer_status='D') as candidates_not_considered,(SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'D'AND employer_status='R') as candidates_rejected FROM e.job_details WHERE e.employer_id =". $data['id']);
+        $jobs = JobDetails::where('employer_id',$data['id'])
+                           ->select(\DB::raw("*, (SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'A'AND employer_status='A') as active_in_interview_phase,(SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'D'AND employer_status='D') as candidates_not_considered,(SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'D'AND employer_status='R') as candidates_rejected"))
+                           ->paginate(1);
+        return view('employer_frontend.job.view_add_job',['jobs'=>$jobs]);
+    }
 }

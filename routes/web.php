@@ -41,6 +41,6 @@ Route::group(['middleware'=>['checkAuth:candidate']],function(){
 Route::group(['middleware'=>['checkAuth:employer']],function(){
     Route::get('add_job','employer_frontend\JobController@create');
     Route::post('store_job','employer_frontend\JobController@store_job');
-
+    Route::get('view_add_job','employer_frontend\JobController@view_add_job');
 });
  Route::get('user_logout','Auth\RegisterController@user_logout');
