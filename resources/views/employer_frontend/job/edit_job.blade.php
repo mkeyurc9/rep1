@@ -26,8 +26,8 @@
                     <label class="control-label col-md-3">Withdraw Job Submission
                     </label>
                     <div class="radio">
-                        <label><input type="radio" name="withdraw_job_submission" value="1">Yes</label>
-                        <label><input type="radio" name="withdraw_job_submission" value="0" checked>No</label>
+                        <label><input type="radio" name="withdraw_job_submission" value="1" @if($job->withdraw_job_submission=='1') checked @endif >Yes</label>
+                        <label><input type="radio" name="withdraw_job_submission" value="0" @if($job->withdraw_job_submission=='0') checked @endif >No</label>
                     </div>
                 </div>
                 <div class="form-group">
