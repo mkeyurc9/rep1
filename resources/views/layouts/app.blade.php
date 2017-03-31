@@ -26,6 +26,9 @@
             span.help-block-error {
                 color: #FF0000;
             }
+            .fa-align{
+                margin-left: 345px;
+            }
         </style>
     </head>
     <body id="app-layout">

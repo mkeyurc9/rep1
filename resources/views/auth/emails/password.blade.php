@@ -1,1 +1,2 @@
-Click here to reset your password: <a href="{{ $link = url('password/reset', $token).'?email='.urlencode($user->getEmailForPasswordReset()) }}"> {{ $link }} </a>
+Hey {{$firstname.' '.$lastname}}, Welcome to our website. <br>
+Click here to reset your password: <a href="{!! url('set_password', ['type'=>$type,'id'=>$id,'token'=>$token]) !!}"> Here</a> to confirm email

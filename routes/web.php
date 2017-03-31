@@ -27,6 +27,8 @@ Route::get('employer_register/verify/{token}','Auth\RegisterController@confirm_r
 
 Route::get('view_login','Auth\RegisterController@view_login');
 Route::post('user_login','Auth\RegisterController@user_login');
+Route::get('set_password/{type}/{id}/{token}','Auth\ForgotPasswordController@reset_password');
+Route::post('password_update','Auth\ForgotPasswordController@password_update');
 
 Route::group(['middleware'=>['checkAuth:candidate']],function(){
     Route::get('edit_profile','frontend\ProfileController@index');
@@ -35,7 +37,6 @@ Route::group(['middleware'=>['checkAuth:candidate']],function(){
     Route::get('view_matched_jobs','frontend\MatchingAlgoController@index');
     Route::get('display_job_description/{id}','frontend\MatchingAlgoController@job_description');
     Route::post('update_candidate_job_status/{id}','frontend\MatchingAlgoController@update_candidate_job_status');
-//    Route::get('user_logout','Auth\RegisterController@user_logout');
 });
 
 Route::group(['middleware'=>['checkAuth:employer']],function(){
