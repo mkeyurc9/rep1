@@ -1,9 +1,10 @@
 @include('layouts.app')
 <script src="{{asset("/plugins/jquery-validation/js/jquery.validate.min.js")}}" type="text/javascript"></script>
 <script src="{{asset("/plugins/jquery-validation/js/additional-methods.min.js")}}" type="text/javascript"></script>
+<div class="container">
 <div class="row">
     <div class="portlet-body">
-        <form method="post" class="form-horizontal" id="frm_job_add" action="{{url('store_job')}}">
+        <form method="post" class="form-horizontal" id="frm_job_add" action="{{url('update_job/'.$job->id)}}">
             {{ csrf_field() }}
             
             @if (count($errors) > 0)
@@ -16,26 +17,24 @@
             </div>
             @endif
             <div class="form-body">
-<!--                <div class="form-group">
+                <div class="form-group">
+                    <label class="control-label col-md-3">Job Title
+                    </label>
+                    <div class="col-md-4">
+                        <input name="job_title" value="{{$job->title}}" type="text" id="job_title" class="form-control" />
+                    </div>
                     <label class="control-label col-md-3">Withdraw Job Submission
                     </label>
                     <div class="radio">
                         <label><input type="radio" name="withdraw_job_submission" value="1">Yes</label>
                         <label><input type="radio" name="withdraw_job_submission" value="0" checked>No</label>
                     </div>
-                </div>-->
-                <div class="form-group">
-                    <label class="control-label col-md-3">Job Title
-                    </label>
-                    <div class="col-md-4">
-                        <input name="job_title" value="" type="text" id="job_title" class="form-control" />
-                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3">Job Location
                     </label>
                     <div class="col-md-4">
-                        <input name="job_location" value="" type="text" id="job_location" class="form-control" />
+                        <input name="job_location" value="{{$job->location}}" type="text" id="job_location" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -43,9 +42,20 @@
                     </label>
                     <div>
                         <div class="checbox">
+                            @php 
+                                $pmids = explode(',', $job->pm_id);
+                            @endphp
                             @foreach($product_management_type as $pm)
+                                @php
+                                    $checked = '';
+                                @endphp
+                                @if(in_array($pm->id, $pmids))
+                                    @php
+                                        $checked = 'checked';
+                                    @endphp
+                                @endif
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="job_type[]" value="{{$pm->id}}">{{$pm->name}}
+                                    <input type="checkbox" name="job_type[]" value="{{$pm->id}}" {{$checked}}>{{$pm->name}}
                                 </label>
                             @endforeach
                         </div>
@@ -65,10 +75,10 @@
                     <div class="col-md-4">
                         <select class="form-control" name="annual_salary" id="annual_salary">
                             <option value="">--Select--</option>
-                            <option value="60000-1000000">60000-100000</option>
-                            <option value="100000-1250000">100000-125000</option>
-                            <option value="125000-150000">125000-150000</option>
-                            <option value="150000+">150000+</option>
+                            <option value="60000-1000000" @if($job->annual_salary=='60000-1000000') selected @endif>60000-100000</option>
+                            <option value="60000-1250000" @if($job->annual_salary=='60000-1250000') selected @endif>60000-125000</option>
+                            <option value="125000-150000" @if($job->annual_salary=='125000-150000') selected @endif>125000-150000</option>
+                            <option value="150000+" @if($job->annual_salary=='150000+') selected @endif>150000+</option>
                         </select>
                     </div>
                 </div>
@@ -76,9 +86,20 @@
                     <label class="control-label col-md-3">Preferred Domain experience
                     </label>
                     <div class="checbox col-md-8">
+                        @php 
+                                $dm_ids = explode(',', $job->domains_id);
+                            @endphp
                         @foreach($domains as $domain)
+                         @php
+                                    $checked = '';
+                                @endphp
+                                @if(in_array($domain->id, $dm_ids))
+                                    @php
+                                        $checked = 'checked';
+                                    @endphp
+                                @endif
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="domains[]" value="{{$domain->id}}">{{$domain->name}}
+                                    <input type="checkbox" name="domains[]" value="{{$domain->id}}" {{$checked}}>{{$domain->name}}
                                 </label>
                         @endforeach
                     </div>
@@ -87,7 +108,7 @@
                     <label class="control-label col-md-3">Job Description
                     </label>
                     <div class="col-md-4">
-                        <textarea name="job_description" id="job_description" class="form-control" /></textarea>
+                        <textarea name="job_description" id="job_description" class="form-control" />{{$job->description}}</textarea>
                     </div>
                 </div>
                 <div class="form-actions">
@@ -103,6 +124,7 @@
         </form> 
 
     </div>
+</div>
 </div>
 <script>
 

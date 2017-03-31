@@ -60,8 +60,6 @@
                     }
         </style>
         <script>
-            var s3_banner_url = 'https://s3.amazonaws.com/rejoiceapp/banner_images/';
-            var s3_album_url = 'https://s3.amazonaws.com/rejoiceapp/album_images/';
         </script>
     </head>
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">

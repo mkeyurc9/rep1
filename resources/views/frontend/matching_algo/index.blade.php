@@ -12,6 +12,7 @@
                 <div class="form-group">
                     <label>Interview Status</label>
                     <select class="form-control" name="candidate_status" id="candidate_status" onchange="get_jobs()">
+                        <option value="C">All</option>
                         <option value="PA">Pending And Active</option>
                         <option value="P">Pending</option>
                         <option value="A">Active</option>
@@ -29,7 +30,7 @@
             </thead>
             <tbody id="tbody_filter">
                 @if($matching_algo->toArray()['total']==0)
-                    <tr><td>No Matching Jobs Available</td></tr>
+                <tr><td>No Matching Jobs Available</td></tr>
                 @else
                 @foreach($matching_algo as $mat_algo)
                 <tr>
@@ -49,12 +50,12 @@
         var cur = $('#candidate_status').val();
         $.ajax({
             url: url,
-            data:{cur:cur,"_token": "{{csrf_token()}}"},
-            cache:false,
-            type:'GET',
-            success:function(data){ // this is view data returned by controller
-                console.log(data);
-            $('#tbody_filter').html(data); // use it to fill your results
+            data: {cur: cur, "_token": "{{csrf_token()}}"},
+            dataType: 'html',
+            cache: false,
+            type: 'GET',
+            success: function (data) {
+                $("#tbody_filter").html(data);     
             }
         });
     }

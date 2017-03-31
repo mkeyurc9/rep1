@@ -12,6 +12,7 @@
                     <th>Active in Interview Phase</th>
                     <th>Candidates not considered</th>
                     <th>Candidates Rejected</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="tbody_filter">
@@ -24,6 +25,11 @@
                     <td>{{$job['active_in_interview_phase']}}</td>
                     <td>{{$job['candidates_not_considered']}}</td>
                     <td>{{$job['candidates_rejected']}}</td>
+                    @if($job['cnt_pending_review']< 1 && $job['active_in_interview_phase']< 1 && $job['candidates_not_considered']< 1 && $job['candidates_rejected']<1)
+                    <td><a href="{{url('edit_job/'.$job['id'])}}">Edit</a></td>
+                    @else
+                    <td></td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>             

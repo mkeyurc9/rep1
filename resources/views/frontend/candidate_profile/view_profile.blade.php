@@ -47,7 +47,7 @@
                                     $checked='';
                                 @endphp
                               
-                                @foreach($interests as $interest)
+                                @foreach($product_management_type as $interest)
                                     @if($pm->id == $interest->id)
                                         @php
                                             $checked='checked';
@@ -73,7 +73,11 @@
                                     $checked='';
                                 @endphp
                                 
-                                @if($pm_exp == $pm_experience->id)
+                                @if(is_null($pm_exp))
+                                    @php
+                                        $checked='checked';
+                                    @endphp
+                                @else if($pm_exp == $pm_experience->id)
                                     @php
                                         $checked='checked';
                                     @endphp
