@@ -116,7 +116,7 @@ class JobController extends Controller
         $old_data=JobDetails::where('employer_id',$data['id'])
                               ->where('id',$id)
                               ->first();
-                     
+         unset($old_data['id']);          
          $old_data['audit_created_at'] = date('Y-m-d H:i:s');  
          \DB::table('job_details_audit')->insert([$old_data->toArray()]);
         

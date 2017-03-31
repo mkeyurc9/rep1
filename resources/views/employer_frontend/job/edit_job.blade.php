@@ -76,7 +76,7 @@
                         <select class="form-control" name="annual_salary" id="annual_salary">
                             <option value="">--Select--</option>
                             <option value="60000-1000000" @if($job->annual_salary=='60000-1000000') selected @endif>60000-100000</option>
-                            <option value="60000-1250000" @if($job->annual_salary=='60000-1250000') selected @endif>60000-125000</option>
+                            <option value="100000-1250000" @if($job->annual_salary=='100000-1250000') selected @endif>100000-125000</option>
                             <option value="125000-150000" @if($job->annual_salary=='125000-150000') selected @endif>125000-150000</option>
                             <option value="150000+" @if($job->annual_salary=='150000+') selected @endif>150000+</option>
                         </select>
