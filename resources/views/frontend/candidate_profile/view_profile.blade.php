@@ -77,7 +77,7 @@
                                     @php
                                         $checked='checked';
                                     @endphp
-                                @else if($pm_exp == $pm_experience->id)
+                                @elseif($pm_exp == $pm_experience->id)
                                     @php
                                         $checked='checked';
                                     @endphp
