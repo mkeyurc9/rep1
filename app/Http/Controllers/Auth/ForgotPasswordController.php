@@ -69,16 +69,16 @@ class ForgotPasswordController extends Controller
       }
     }
     
-    function reset_password($type,$token,$id){
+    function reset_password($type,$id,$token){
       return view('auth.passwords.reset',['type'=>$type,'token'=>$token,'id'=>$id]); 
     }
     function password_update(Request $request){
        $password = md5($request->input('password'));
-       $token = $request->input('id');
+       $id = $request->input('id'); 
        if($request->input('type')=='customer'){
-           Candidate::where('token', $token)->update(['token'=>NULL,'password'=>$password]);
+           Candidate::where('candidate_id',$id)->update(['token'=>NULL,'password'=>$password]);
        }else{  
-           Employer::where('token', $token)->update(['token'=>NULL,'password'=>$password]);
+           Employer::where('employer_id',$id)->update(['token'=>NULL,'password'=>$password]);
        }
        Session::flash('message', 'Password updated Successfully');
        return redirect('/home');
