@@ -52,7 +52,7 @@ class ForgotPasswordController extends Controller
             $data['id'] = $e_data->candidate_id;
             $data['firstname'] = $c_data->firstname;
             $data['lastname'] = $c_data->lastname;
-            $data['type'] = 'customer';
+            $data['type'] = 'candidate';
             send_email($data,$template);
             Candidate::where('candidate_id', $data['id'])->update(['token'=>$token]);
             Session::flash('message', 'Send Forgot password Link to your email');
@@ -61,7 +61,7 @@ class ForgotPasswordController extends Controller
             $data['id'] = $e_data->employer_id;
             $data['firstname'] = $e_data->firstname;
             $data['lastname'] = $e_data->lastname;
-            $data['type'] = 'merchant';
+            $data['type'] = 'employer';
             send_email($data,$template);
             Employer::where('employer_id', $data['id'])->update(['token'=>$token]);
             Session::flash('message', 'Send Forgot password Link to your email');
@@ -70,15 +70,29 @@ class ForgotPasswordController extends Controller
     }
     
     function reset_password($type,$id,$token){
-      return view('auth.passwords.reset',['type'=>$type,'token'=>$token,'id'=>$id]); 
+      if($type=='candidate'){
+           $user=Candidate::where('candidate_id',$id)
+                     ->where('token',$token)
+                     ->first();
+      } else {
+           $user=Employer::where('employer_id',$id)
+                    ->where('token',$token)
+                    ->first();
+      } 
+      return view('auth.passwords.reset',['type'=>$type,'token'=>$token,'id'=>$id,'user'=>$user]); 
     }
     function password_update(Request $request){
        $password = md5($request->input('password'));
        $id = $request->input('id'); 
-       if($request->input('type')=='customer'){
-           Candidate::where('candidate_id',$id)->update(['token'=>NULL,'password'=>$password]);
+       $token = $request->input('a_token'); 
+       if($request->input('type')=='candidate'){
+           Candidate::where('candidate_id',$id)
+                     ->where('token',$token)
+                     ->update(['token'=>NULL,'password'=>$password]);
        }else{  
-           Employer::where('employer_id',$id)->update(['token'=>NULL,'password'=>$password]);
+           Employer::where('employer_id',$id)
+                    ->where('token',$token)
+                    ->update(['token'=>NULL,'password'=>$password]);
        }
        Session::flash('message', 'Password updated Successfully');
        return redirect('/home');

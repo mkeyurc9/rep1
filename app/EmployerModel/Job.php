@@ -12,6 +12,6 @@ class Job extends Model
         'annual_salary','location'
     ];
     function employer_status(){
-        return $this->belongsTo('App\Model\MatchingAlgo','id','job_id');
+        return $this->hasMany('App\Model\MatchingAlgo','job_id','id');
     }
 }

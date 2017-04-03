@@ -11,6 +11,7 @@
                     {{Session::get('message')}}
                     @endif
                 </div>
+               @if(!empty($user))
                 <div class="form-group">
                     <label class="control-label col-md-3">Password
                         <span class="required"> * </span>
@@ -39,6 +40,11 @@
                     <input name="a_token" value="{{$token}}" type="hidden" class="form-control" />
                     <input name="type" value="{{$type}}" type="hidden" class="form-control" />
             </div>
+            @else
+                <div style="width:40%;margin-bottom: 20px; text-align: center;">            
+                    <p>Invalid Forgot password link</p>
+                </div>
+            @endif
         </form> 
            
     </div>

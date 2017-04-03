@@ -13,4 +13,7 @@ class MatchingAlgo extends Model
     function employer_signup(){
         return $this->hasOne('App\Model\Employer','employer_id','employer_id');
     }
+    function candidate_signup(){
+        return $this->hasMany('App\Model\Candidate','candidate_id','candidate_id');
+    }
 }

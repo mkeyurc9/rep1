@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\EmployerModel\Job as JobDetails;
+use App\Model\MatchingAlgo as MatchingAlgo;
 
 class JobController extends Controller
 {
@@ -138,5 +139,21 @@ class JobController extends Controller
         );
         JobDetails::where('id',$id)->update($job_details);
         return redirect('view_add_job'); 
+    }
+    
+    function view_employer_job($id){
+        $job = JobDetails::where('id',$id)
+                           ->with('employer_status')
+                           ->first();
+        $pending = MatchingAlgo::with('candidate_signup')->where('job_id',$id)->where(['candidate_status'=>'A','employer_status'=>'P'])->get();
+        $active = MatchingAlgo::with('candidate_signup')->where('job_id',$id)->where(['candidate_status'=>'A','employer_status'=>'A'])->get();
+        $process = MatchingAlgo::with('candidate_signup')->where('job_id',$id)->where(['candidate_status'=>'D','employer_status'=>'D'])->get();
+        $rejected = MatchingAlgo::with('candidate_signup')->where('job_id',$id)->where(['candidate_status'=>'D','employer_status'=>'R'])->get();
+        $arr_domains = explode(',',$job['domains_id']);
+        $pm_experiences = \DB::table('domains')->whereIn('id', $arr_domains)->get();
+        $arr_interest = explode(',',$job['pm_id']);
+       
+        $product_management_type = \DB::table('product_management_type')->whereIn('id', $arr_interest)->get();
+       return view('employer_frontend.job.view_employer_job',['rejected'=>$rejected,'process'=>$process,'pending'=>$pending,'active'=>$active,'job'=>$job,'domains' => $product_management_type,'pm_experiences'=>$pm_experiences]);
     }
 }
