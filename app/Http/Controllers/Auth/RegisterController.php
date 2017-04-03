@@ -110,6 +110,7 @@ class RegisterController extends Controller
         $candidate['created_at'] = date('Y-m-d H:i:s');
         $candidate['updated_at'] = date('Y-m-d H:i:s');
         $candidate['activation_token'] = str_random(40);
+        $data['msg'] = "Welcome to JobZedra";
         Candidate::insert($candidate);
         Session::flash('message', 'Candidate created Successfully!!');
         $template = 'auth/emails.candidate_verification';

@@ -48,8 +48,9 @@ class ForgotPasswordController extends Controller
       $template = 'auth/emails.password';
       $data['token'] = $token = str_random(40);
       $data['email'] = $email;
+      $data['msg'] = "Forgot Password Link";
       if($c_data){     
-            $data['id'] = $e_data->candidate_id;
+            $data['id'] = $c_data->candidate_id;
             $data['firstname'] = $c_data->firstname;
             $data['lastname'] = $c_data->lastname;
             $data['type'] = 'candidate';
