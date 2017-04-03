@@ -29,7 +29,7 @@
                     <label class="control-label col-md-3">Interested in
                     </label>
                     <div>
-                        @foreach($pm_experiences as $interest)
+                        @foreach($interests as $interest)
                         {{$interest->name}}
                         @if (!$loop->last)
                         {{ '&nbsp;&nbsp;|&nbsp;&nbsp;' }}

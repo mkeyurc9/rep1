@@ -202,7 +202,6 @@ $(document).ready(function ()
 
             },
             resume:{
-                    required:true,
                     extension: "pdf|docx|doc"
                     },
             "domains[]": { 
@@ -228,8 +227,7 @@ $(document).ready(function ()
                "interest_in[]":{
                   required:"Please select at least one Interested in."    
                },
-            resume:{
-                  required:"Please upload Resume",                  
+            resume:{                
                   extension:"Please only select pdf, doc, or docx file"
                   },
             exclude_company: {required: "Please Enter Exclude Companies"},

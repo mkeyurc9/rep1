@@ -29,7 +29,7 @@ class ProfileController extends Controller {
         $domains = \DB::table('domains')->get(['name', 'id']);
         $product_management_type = \DB::table('product_management_type')->get(['name', 'id']);
         $pm_experiences = \DB::table('pm_experience')->get(['name', 'id']);
-        
+   
         return view('frontend.candidate_profile.view_profile', ['domains' => $domains, 'product_management_type' => $product_management_type,'candidate_profile' => $candidate_profile,'candidate_domains' => $candidate_domains,'interests' => $interest_in,'pm_exp'=> $pm_exp, 'pm_experiences'=>$pm_experiences]);
     }
 
@@ -46,12 +46,6 @@ class ProfileController extends Controller {
         ]);
 
         $data = $request->session()->all();
-        $inputResume = $request['resume'];
-        $destinationPath = public_path() . '/upload_resume';
-        $extension = $inputResume->getClientOriginalExtension();
-        $resume = 'C' . '_' . $data['id'] . '_' . time() . '.' . $extension;
-        $inputResume->move($destinationPath, $resume);
-
         $p_arr = $request['interest_in'];
         $d_arr = $request['domains'];
 
@@ -80,11 +74,17 @@ class ProfileController extends Controller {
             'relocation_required' => $request['relocation_required'],
             'willing_to_relocate' => $request['willing_to_relocate'],
             'status' => $status,
-            'resume' => $resume,
             'created_at' => date('Y-m-d H:i:s '),
             'updated_at' => date('Y-m-d H:i:s')
         );
-
+        if ($request->hasFile('resume')) {
+        $inputResume = $request['resume'];
+        $destinationPath = public_path() . '/upload_resume';
+        $extension = $inputResume->getClientOriginalExtension();
+        $resume = 'C' . '_' . $data['id'] . '_' . time() . '.' . $extension;
+        $inputResume->move($destinationPath, $resume);
+        $candidate_profile['resume']=$resume;
+        }
         $check_candidate = CandidateProfile::where('profile_candidate_id', $data['id'])->first();
         if ($check_candidate) {
             unset($check_candidate['id']);
