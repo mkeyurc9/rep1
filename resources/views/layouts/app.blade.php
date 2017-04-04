@@ -75,7 +75,7 @@
                         <li><a href="{{ url('/home#sign-up') }}">Sign up</a></li>
                         @endif
                         <li><a href="{{ url('/home#about-us') }}">About Us</a></li>
-                        <li><a href="{{ url('/home#work-flow') }}">Workflow</a></li>
+                        <li><a href="{{ url('/home#work-flow') }}">How it works</a></li>
                     </ul>
                 </div>
             </div>

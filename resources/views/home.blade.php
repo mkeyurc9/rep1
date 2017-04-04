@@ -82,8 +82,8 @@
                 <div class="sign_up_main">
                     <div class="sign_up_wrap" id="sign-up">Sign Up</div>
                     <div class="sign_up_link_wrap">
-                        <div class="sign_up_links" ><a href="{{url('candidate/register')}}">Candidate</a></div>
-                        <div class="sign_up_links"><a href="{{url('employer/register')}}">Employer</a></div>
+                        <div class="sign_up_links" >@if(empty(Session::has('email')))<a href="{{url('candidate/register')}}">Candidate</a> @else Candidate @endif</div>
+                        <div class="sign_up_links">@if(empty(Session::has('email')))<a href="{{url('employer/register')}}">Employer</a>@else Employer @endif</div>
                     </div>
 
                 </div>
@@ -112,7 +112,7 @@
                 </div>
 
                 <div class="workflow_main" id="work-flow">
-                    <div class="workflow_wrap">Workflow</div>
+                    <div class="workflow_wrap">How it works</div>
                     <div class="about_us_content">
                         <div class="about_us_subcontent">
                             <div class="about_us_data">Candidates submit their profile. After close interaction with them, we apply our algorithm to find their dream job. We thus provide platform for candidates and employers to facilitate achieving their goals. 
