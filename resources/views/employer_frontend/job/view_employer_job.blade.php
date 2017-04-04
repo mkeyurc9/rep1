@@ -19,7 +19,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3">Job Title
                             </label>
-                            <div class="col-md-4">
+                            <div class="radio">
                                 {{$job['title']}}
                             </div>
                             <div>
@@ -28,14 +28,14 @@
                         <div class="form-group">
                             <label class="control-label col-md-3">Job Location
                             </label>
-                            <div class="col-md-4">
+                            <div class="radio">
                                 {{$job['location']}}
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Job Type
                             </label>
-                            <div class="col-md-4">
+                            <div class="radio">
                                 @foreach($domains as $domain)
                                 {{$domain->name}}
                                 @if (!$loop->last)
@@ -54,7 +54,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Annual Salary range in USD</label>
-                            <div class="col-md-4">
+                            <div class="radio">
                                 {{$job['annual_salary']}}
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                             <label class="control-label col-md-3">Preferred Domain experience
                             </label>
                             <div class="checbox col-md-8">
-                                <div class="col-md-4">
+                                <div class="radio">
                                     @foreach($pm_experiences as $domain)
                                     {{$domain->name}}
                                     @if (!$loop->last)
