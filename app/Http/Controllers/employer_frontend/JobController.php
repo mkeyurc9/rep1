@@ -76,11 +76,14 @@ class JobController extends Controller {
      */
     function view_add_job(Request $request) {
         $data = $request->session()->all();
-        $jobs = JobDetails::where('employer_id', $data['id'])
-                ->select(\DB::raw("*, (SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'A'AND employer_status='A') as active_in_interview_phase,(SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'D'AND employer_status='D') as candidates_not_considered,(SELECT COUNT(1) FROM matching_algo_status WHERE candidate_status= 'D'AND employer_status='R') as candidates_rejected"))
-                ->orderby('created_at', 'desc')
-                ->paginate(10);
-        return view('employer_frontend.job.view_add_job', ['jobs' => $jobs]);
+        //\DB::enableQueryLog();
+        $jobs = \DB::table('job_details as jd')->where('employer_id',$data['id'])
+                           ->select(\DB::raw("*, (SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id 
+AND candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id AND candidate_status= 'A'AND employer_status='A') as active_in_interview_phase,(SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id AND candidate_status= 'D'AND employer_status='D') as candidates_not_considered,(SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id AND candidate_status= 'D'AND employer_status='R') as candidates_rejected"))
+                           ->orderby('created_at','desc')
+                           ->paginate(10);
+        //print_r(\DB::getQueryLog());exit;
+        return view('employer_frontend.job.view_add_job',['jobs'=>$jobs]);
     }
 
     /**
