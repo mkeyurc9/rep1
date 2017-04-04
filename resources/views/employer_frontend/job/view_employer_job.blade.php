@@ -26,7 +26,7 @@
                             @foreach($pending as $pnd)
                                 @foreach($pnd['candidate_signup'] as $c_d)
                                  <br>
-                                  <a href="javascript:void(0)">{{$c_d['firstname']." ".$c_d['lastname']}}</a>
+                                  <a href="{{url('employer_candidate_profile/'.$pnd['id'])}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>
                                   
                                 @endforeach
                             @endforeach
@@ -51,7 +51,7 @@
                             @foreach($active as $pnd)
                                 @foreach($pnd['candidate_signup'] as $c_d)
                                  <br>
-                                  <a href="javascript:void(0)">{{$c_d['firstname']." ".$c_d['lastname']}}</a>
+                                  <a href="{{url('employer_candidate_profile/'.$pnd['id'])}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>
                                 @endforeach
                             @endforeach
                              @else
@@ -79,7 +79,7 @@
                             @foreach($process as $pnd)
                                 @foreach($pnd['candidate_signup'] as $c_d)
                                  <br>
-                                  <a href="javascript:void(0)">{{$c_d['firstname']." ".$c_d['lastname']}}</a>
+                                  <a href="{{url('employer_candidate_profile/'.$pnd['id'])}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>
                                 @endforeach
                             @endforeach
                             @else
@@ -130,7 +130,7 @@
                             @foreach($rejected as $pnd)
                                 @foreach($pnd['candidate_signup'] as $c_d)
                                  <br>
-                                  <a href="javascript:void(0)">{{$c_d['firstname']." ".$c_d['lastname']}}</a>
+                                  <a href="{{url('employer_candidate_profile/'.$pnd['id'])}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>
                                 @endforeach
                             @endforeach
                             @else

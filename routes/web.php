@@ -46,5 +46,7 @@ Route::group(['middleware'=>['checkAuth:employer']],function(){
     Route::get('edit_job/{id}','employer_frontend\JobController@edit_job');
     Route::post('update_job/{id}','employer_frontend\JobController@update_job');
     Route::get('view_employer_job/{id}','employer_frontend\JobController@view_employer_job');
+    Route::get('employer_candidate_profile/{id}','employer_frontend\JobController@employer_candidate_profile');
+    Route::post('update_employer_candidate_profile/{id}','employer_frontend\JobController@update_employer_candidate_profile');
 });
  Route::get('user_logout','Auth\RegisterController@user_logout');
