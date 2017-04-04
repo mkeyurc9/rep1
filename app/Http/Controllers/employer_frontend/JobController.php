@@ -120,7 +120,7 @@ AND candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT
         $data = $request->session()->all();
         $p_arr = $request['job_type'];
         $d_arr = $request['domains'];
-
+        
         $old_data = JobDetails::where('employer_id', $data['id'])
                 ->where('id', $id)
                 ->first();
@@ -141,7 +141,7 @@ AND candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT
             'level' => $request['job_level'],
             'annual_salary' => $request['annual_salary'],
             'location' => $request['job_location'],
-            'created_at' => $request['created_at'],
+            'created_at' => $old_data['created_at'],
             'updated_at' => date('Y-m-d H:i:s')
         );
         JobDetails::where('id', $id)->update($job_details);

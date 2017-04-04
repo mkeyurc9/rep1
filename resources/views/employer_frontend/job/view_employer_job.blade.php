@@ -75,7 +75,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-3">Job Description
                             </label>
-                            <div class="col-md-4">
+                            <div class="radio">
                                 {{$job->description}}
                             </div>
 
