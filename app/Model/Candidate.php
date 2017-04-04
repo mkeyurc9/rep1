@@ -18,4 +18,7 @@ class Candidate extends Model
    protected $hidden = [
         'password'
     ];
+   function profile(){
+       return $this->hasOne('App\Model\CandidateProfile','profile_candidate_id','candidate_id');
+   }
 }

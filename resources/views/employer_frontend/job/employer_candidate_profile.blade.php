@@ -26,14 +26,14 @@
                     <label class="control-label col-md-3">Status
                     </label>
                     <div class="radio">
-                        <label>@if($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='P') Pending for Review @elseif($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='A') Active @elseif($mat_algo['candidate_status']=='D' && $mat_algo['employer_status']=='D') Processed @elseif($mat_algo['candidate_status']=='D' && $mat_algo['employer_status']=='S') Successfull @else Rejected @endif</label>
+                        <label>@if($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='P') Pending for Review @elseif($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='A') Active @elseif($mat_algo['candidate_status']=='D' && $mat_algo['employer_status']=='D') Processed @elseif($mat_algo['candidate_status']=='S' && $mat_algo['employer_status']=='S') Successfull @else Rejected @endif</label>
                     </div>
                 </div>
                 @if(($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='P')||($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='A'))
                 <div class="form-group">
                     <label class="control-label col-md-3">Interested to proceed with interview ?</label>
                     <div class="col-md-4">
-                    <select class="form-control" name="employer_status" id="candidate_status">
+                    <select class="form-control" name="employer_job_status" id="employer_job_status">
                         <option value="">--Select--</option>
                         <option value="1">Yes</option>
                         <option value="0">No</option>
@@ -45,7 +45,7 @@
                     <label class="control-label col-md-3">Resume
                     </label>
                     <div class="col-md-4">
-                        <label></label>
+                        <a href="{{ asset('/upload_resume/'.$candidate['profile']['resume'])}}" target="_blank">View Resume</a>
                     </div>
                 </div>
                 @if(($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='P')||($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='A')) 
@@ -58,8 +58,8 @@
                 </div>
                @endif
             </div>
-             <input type="hidden" name="candidate_satus" value="{{$mat_algo['candidate_status']}}">
-             <input type="hidden" name="employer_satus" value="{{$mat_algo['employer_status']}}">
+             <input type="hidden" name="candidate_status" value="{{$mat_algo['candidate_status']}}">
+             <input type="hidden" name="employer_status" value="{{$mat_algo['employer_status']}}">
         </form> 
     </div>
 </div>

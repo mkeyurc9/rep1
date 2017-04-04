@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\EmployerModel\Job as JobDetails;
 use App\Model\MatchingAlgo as MatchingAlgo;
+use App\Model\Candidate as Candidate;
 
 class JobController extends Controller {
 
@@ -163,36 +164,38 @@ AND candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT
         $pending = MatchingAlgo::with('candidate_signup')->where('job_id', $id)->where(['candidate_status' => 'A', 'employer_status' => 'P'])->get();
         $active = MatchingAlgo::with('candidate_signup')->where('job_id', $id)->where(['candidate_status' => 'A', 'employer_status' => 'A'])->get();
         $process = MatchingAlgo::with('candidate_signup')->where('job_id', $id)->where(['candidate_status' => 'D', 'employer_status' => 'D'])->get();
+        $success = MatchingAlgo::with('candidate_signup')->where('job_id', $id)->where(['candidate_status' => 'S', 'employer_status' => 'S'])->get();
         $rejected = MatchingAlgo::with('candidate_signup')->where('job_id', $id)->where(['candidate_status' => 'D', 'employer_status' => 'R'])->get();
         $arr_domains = explode(',', $job['domains_id']);
         $pm_experiences = \DB::table('domains')->whereIn('id', $arr_domains)->get();
         $arr_interest = explode(',', $job['pm_id']);
         $product_management_type = \DB::table('product_management_type')->whereIn('id', $arr_interest)->get();
-        return view('employer_frontend.job.view_employer_job', ['rejected' => $rejected, 'process' => $process, 'pending' => $pending, 'active' => $active, 'job' => $job, 'domains' => $product_management_type, 'pm_experiences' => $pm_experiences]);
+        return view('employer_frontend.job.view_employer_job', ['success' => $success,'rejected' => $rejected, 'process' => $process, 'pending' => $pending, 'active' => $active, 'job' => $job, 'domains' => $product_management_type, 'pm_experiences' => $pm_experiences]);
     }
 
     function employer_candidate_profile($id) {
         $matching_algo = MatchingAlgo::where('id', $id)
                         ->with('candidate_signup')->first();
-        return view('employer_frontend.job.employer_candidate_profile', ['mat_algo' => $matching_algo]);
+        $candidate = Candidate::where('candidate_id', $matching_algo['candidate_signup'][0]['candidate_id'])->with('profile')->first();
+        return view('employer_frontend.job.employer_candidate_profile', ['candidate'=>$candidate,'mat_algo' => $matching_algo]);
     }
 
-    function update_employer_candidate_profile($id,Request $req) {
+    function update_employer_candidate_profile(Request $req,$id) {
         $this->validate($req, [
             'employer_status' => 'required'
         ]);
         $e_status = $req['employer_status'];
         $c_status = $req['candidate_status'];
-        $status = $req['employer_status'];
+        $status = $req['employer_job_status'];
         if ($status == 1) {
             if($c_status=='A' && $e_status=='P'){
             $data['candidate_status'] = 'A';
             $data['employer_status'] = 'A';
             }else{
-                $data['candidate_status'] = 'D';
+                $data['candidate_status'] = 'S';
                 $data['employer_status'] = 'S';
             }
-        } elseif($status == 0 && $c_status=='D' && $e_status=='A'){
+        } elseif($status == 0 && $c_status=='A' && $e_status=='A'){
             $data['candidate_status'] = 'D';
             $data['employer_status'] = 'R';
         }else{
@@ -200,7 +203,7 @@ AND candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT
             $data['employer_status'] = 'D';
         }
         MatchingAlgo::where('id', $id)->update($data);
-        return redirect('view_employer_job/'.$id);
+        return redirect('employer_candidate_profile/'.$id);
     }
 
 }
