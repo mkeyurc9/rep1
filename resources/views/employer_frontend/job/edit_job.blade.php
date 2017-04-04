@@ -65,9 +65,9 @@
                     <label class="control-label col-md-3">Job level
                     </label>
                     <div class="radio">
-                        <label><input type="radio" name="job_level"  value="entry" checked>Entry</label>
-                        <label><input type="radio" name="job_level" value="mid_level" >Mid-level</label>
-                        <label><input type="radio" name="job_level" value="senior_level" >Senior level</label>
+                        <label><input type="radio" name="job_level"  value="entry" @if($job->level=='entry') checked @endif >Entry</label>
+                        <label><input type="radio" name="job_level" value="mid_level" @if($job->level=='mid_level') checked @endif>Mid-level</label>
+                        <label><input type="radio" name="job_level" value="senior_level" @if($job->level=='senior_level') checked @endif >Senior level</label>
                     </div>
                 </div>
                 <div class="form-group">

@@ -110,7 +110,7 @@ class RegisterController extends Controller
         $candidate['created_at'] = date('Y-m-d H:i:s');
         $candidate['updated_at'] = date('Y-m-d H:i:s');
         $candidate['activation_token'] = str_random(40);
-        $data['msg'] = "Welcome to JobZedra";
+        $candidate['msg'] = "Welcome to JobZedra";
         Candidate::insert($candidate);
         Session::flash('message', 'Candidate created Successfully!!');
         $template = 'auth/emails.candidate_verification';
@@ -186,6 +186,7 @@ class RegisterController extends Controller
         $employer['company_url'] = $request->input('company_url');
         $employer['created_at'] = date('Y-m-d H:i:s');
         $employer['updated_at'] = date('Y-m-d H:i:s');
+        $employer['msg'] = "Welcome to JobZedra";
         $employer['activation_token'] = str_random(40);
         Employer::insert($employer);
         Session::flash('message', 'Employer created Successfully!!');

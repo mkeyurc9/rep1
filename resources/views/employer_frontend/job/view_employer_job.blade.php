@@ -113,7 +113,7 @@
                     @endif
                 </div>
                 <div class="col-md-12">
-                      <strong>Candidates Processing </strong>
+                      <strong>Candidates not considered </strong>
                         @if(!empty($process->toArray()))
                         @foreach($process as $pnd)
                         @foreach($pnd['candidate_signup'] as $c_d)
@@ -127,7 +127,7 @@
                         @endif
                     </div>
                 <div class="col-md-12">
-                    <strong>Candidates not considered</strong>
+                    <strong>Candidates Rejected</strong>
                     @if(!empty($rejected->toArray()))
                     @foreach($rejected as $pnd)
                     @foreach($pnd['candidate_signup'] as $c_d)
