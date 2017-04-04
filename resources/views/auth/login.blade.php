@@ -1,12 +1,20 @@
 @include('layouts.app')
 <script src="{{asset("/plugins/jquery-validation/js/jquery.validate.min.js")}}" type="text/javascript"></script>
 <script src="{{asset("/plugins/jquery-validation/js/additional-methods.min.js")}}" type="text/javascript"></script>
+<style>
+    .shift_left{
+        margin-left:665px;
+    }
+    .session_left{
+        width:40%;margin-bottom: 20px; text-align: center;
+    }
+</style>
 <div class="row">
     <div class="portlet-body">
         <form method="post" class="form-horizontal" id="login" action="{{url('user_login')}}">
             {{ csrf_field() }}
             <div class="form-body">
-                <div style="width:40%;margin-bottom: 20px; text-align: center;">
+                <div class="session_left">
                 @if(Session::has('message'))
                 {{Session::get('message')}}
                 @endif
@@ -27,7 +35,7 @@
                         <input name="password"  type="password" id="password" class="form-control" />
                     </div>
                 </div>
-                <div class="fa-align"><a href="{{url('/password/reset')}}">Forgot Password</a></div>
+                <div class="fa-align shift_left" ><a href="{{url('/password/reset')}}">Forgot Password</a></div>
                 <div class="form-actions">
                     <div class="row">
                         <div class="col-md-offset-3 col-md-9">
