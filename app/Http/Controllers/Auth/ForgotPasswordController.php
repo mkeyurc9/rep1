@@ -96,6 +96,6 @@ class ForgotPasswordController extends Controller
                     ->update(['token'=>NULL,'password'=>$password]);
        }
        Session::flash('message', 'Password updated Successfully');
-       return redirect('/home');
+       return redirect('/');
     }
 }

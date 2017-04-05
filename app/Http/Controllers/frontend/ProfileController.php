@@ -47,9 +47,9 @@ class ProfileController extends Controller {
             'actively_looking' => 'required',
             'authorized_to_work_in_us' => 'required',
             'relocation_required' => 'required',
-            'exclude_companies' => 'required',
+            'exclude_company' => 'required',
             'job_level' => 'required',
-            'need_sponsorship' => 'required',
+            'need_sponsorship_for_employment_visa_status' => 'required',
             'willing_to_relocate' => 'required',
             'relocation_required' => 'required'
         ]);

@@ -115,7 +115,7 @@
                     <div class="row">
                         <div class="col-md-offset-3 col-md-9">
                             <button type="submit" name="cmdSubmit" value="submit" class="btn green">Submit</button>
-                            <a href="{{url('/home')}}" class="btn grey-salsa btn-outline">Cancel</a>
+                            <a href="{{url('/')}}" class="btn grey-salsa btn-outline">Cancel</a>
                         </div>
                     </div>
                 </div>

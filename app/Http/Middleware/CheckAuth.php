@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Model\Candidate as Candidate;
-use App\Model\Employer as Employer;
+//use App\Model\Candidate as Candidate;
+//use App\Model\Employer as Employer;
 
 
 class CheckAuth

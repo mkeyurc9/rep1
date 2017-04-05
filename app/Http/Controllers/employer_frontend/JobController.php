@@ -63,7 +63,7 @@ class JobController extends Controller {
             'updated_at' => date('Y-m-d H:i:s')
         );
         JobDetails::insert($job_details);
-        return redirect('/home');
+        return redirect('/');
     }
 
     /**
