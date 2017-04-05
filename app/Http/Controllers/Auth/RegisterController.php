@@ -34,7 +34,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -116,7 +116,7 @@ class RegisterController extends Controller
         $template = 'auth/emails.candidate_verification';
         $candidate['msg'] = "Welcome to JobZedra";
         send_email($candidate,$template);
-        return redirect('/home');
+        return redirect('/');
     }
   /**
    * 
@@ -130,7 +130,7 @@ class RegisterController extends Controller
         if (!$activation_token) {
             Session::flash('message', 'Activation Code is Blank');
 
-            return redirect('/home');
+            return redirect('/');
         }
 
         $candidate = Candidate::where('activation_token', $activation_token)->first();
@@ -138,7 +138,7 @@ class RegisterController extends Controller
         if (!$candidate) {
              Session::flash('message', 'Already verified. Please Login to continue');
 
-            return redirect('/home');
+            return redirect('/');
         }
 
         $data = array();
@@ -148,7 +148,7 @@ class RegisterController extends Controller
 
         Session::flash('message', 'You have successfully verified your account.');
 
-        return redirect('/home');
+        return redirect('/');
     }
   /**
    *employer_register
@@ -194,7 +194,7 @@ class RegisterController extends Controller
         $template = 'auth/emails.employer_verification';
         $employer['msg'] = "Welcome to JobZedra";
         send_email($employer,$template);
-        return redirect('/home');
+        return redirect('/');
     }
     
      /**
@@ -209,7 +209,7 @@ class RegisterController extends Controller
         if (!$activation_token) {
             Session::flash('message', 'Activation Code is Blank');
 
-            return redirect('/home');
+            return redirect('/');
         }
 
         $employer = Employer::where('activation_token', $activation_token)->first();
@@ -217,7 +217,7 @@ class RegisterController extends Controller
         if (!$employer) {
              Session::flash('message', 'Already verified. Please Login to continue');
 
-            return redirect('/home');
+            return redirect('/');
         }
 
         $data = array();
@@ -227,7 +227,7 @@ class RegisterController extends Controller
 
         Session::flash('message', 'You have successfully verified your account.');
 
-        return redirect('/home');
+        return redirect('/');
     }
     /**
     *view_login
@@ -259,11 +259,11 @@ class RegisterController extends Controller
             //candidate session
                 session(['email'=> $email,'id'=>$candidate['candidate_id'], 'user_type'=> 'candidate']);
         }
-        return redirect('/home');
+        return redirect('/');
     }
     
     function user_logout(Request $request){
        $request->session()->flush();
-       return redirect('/home');
+       return redirect('/');
     }
 }
