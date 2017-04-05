@@ -42,7 +42,9 @@ class ProfileController extends Controller {
     function create(Request $request) {
         $this->validate($request, [
             'exclude_company' => 'required',
-            'expected_salary' => 'required'
+            'expected_salary' => 'required',
+            'profile_status'=>'required',
+            'actively_looking'=>'required'
         ]);
 
         $data = $request->session()->all();
@@ -56,7 +58,10 @@ class ProfileController extends Controller {
 //        print_r($check_candidate->toArray());exit;
         if ($check_candidate) {
             $status = $check_candidate['status'];
-        } else { 
+        } else {
+            $this->validate($request, [
+            'resume' => 'required'
+           ]);
             $status = 'pending';
         }
         $candidate_profile = array(
@@ -77,6 +82,7 @@ class ProfileController extends Controller {
             'created_at' => date('Y-m-d H:i:s '),
             'updated_at' => date('Y-m-d H:i:s')
         );
+        
         if ($request->hasFile('resume')) {
         $inputResume = $request['resume'];
         $destinationPath = public_path() . '/upload_resume';
@@ -85,7 +91,7 @@ class ProfileController extends Controller {
         $inputResume->move($destinationPath, $resume);
         $candidate_profile['resume']=$resume;
         }
-        $check_candidate = CandidateProfile::where('profile_candidate_id', $data['id'])->first();
+        
         if ($check_candidate) {
             unset($check_candidate['id']);
             $check_candidate['audit_created_at'] = date('Y-m-d H:i:s');
