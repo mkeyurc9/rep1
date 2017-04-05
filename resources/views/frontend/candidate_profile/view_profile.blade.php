@@ -42,22 +42,21 @@
                     </label>
                     <div>
                         <div class="checbox">
-                            @foreach($product_management_type as $pm)
+                             @foreach($product_management_type as $product_m)
                                 @php
                                     $checked='';
                                 @endphp
                               
-                                @foreach($product_management_type as $interest)
-                                    @if($pm->id == $interest->id)
+                                @foreach($interests as $candidate_i)
+                                    @if($candidate_i->id == $product_m->id)
                                         @php
                                             $checked='checked';
                                         @endphp
                                     @endif
-                                @endforeach
-                                                                
+                                @endforeach                                        
                                 
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="interest_in[]" {{$checked}} value="{{$pm->id}}">{{$pm->name}}
+                                    <input type="checkbox" name="interest_in[]" {{$checked}} value="{{$product_m->id}}">{{$product_m->name}}
                                 </label>
                             @endforeach
                         </div>
