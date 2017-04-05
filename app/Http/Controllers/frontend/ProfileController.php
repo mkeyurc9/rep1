@@ -43,8 +43,15 @@ class ProfileController extends Controller {
         $this->validate($request, [
             'exclude_company' => 'required',
             'expected_salary' => 'required',
-            'profile_status'=>'required',
-            'actively_looking'=>'required'
+            'profile_status' => 'required',
+            'actively_looking' => 'required',
+            'authorized_to_work_in_us' => 'required',
+            'relocation_required' => 'required',
+            'exclude_companies' => 'required',
+            'job_level' => 'required',
+            'need_sponsorship' => 'required',
+            'willing_to_relocate' => 'required',
+            'relocation_required' => 'required'
         ]);
 
         $data = $request->session()->all();
