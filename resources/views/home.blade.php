@@ -68,6 +68,11 @@
     .about_us_data {
         padding-left: 20px;
     }
+    .sign_up_footer {
+        margin-top: -10px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -124,6 +129,7 @@
                 </div>
 
             </div>
+            <div class="sign_up_footer">You can reach us at <b>support@jobzedra.com</b></div>
         </div>
     </div>
 </div>
