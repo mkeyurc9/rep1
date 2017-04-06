@@ -1,6 +1,6 @@
 @include('layouts.app')
-<script src="{{asset("/public/plugins/jquery-validation/js/jquery.validate.min.js")}}" type="text/javascript"></script>
-<script src="{{asset("/public/plugins/jquery-validation/js/additional-methods.min.js")}}" type="text/javascript"></script>
+<script src="{{asset("/plugins/jquery-validation/js/jquery.validate.min.js")}}" type="text/javascript"></script>
+<script src="{{asset("/plugins/jquery-validation/js/additional-methods.min.js")}}" type="text/javascript"></script>
 <div class="row">
     <div class="portlet-body">
         <form method="post" class="form-horizontal" id="candidate_profile_add" action="{{url('update_employer_candidate_profile/'.$mat_algo['id'])}}" enctype="multipart/form-data" files=true>
