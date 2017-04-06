@@ -1,6 +1,6 @@
 @include('layouts.app')
-<script src="{{asset("/plugins/jquery-validation/js/jquery.validate.min.js")}}" type="text/javascript"></script>
-<script src="{{asset("/plugins/jquery-validation/js/additional-methods.min.js")}}" type="text/javascript"></script>
+<script src="{{asset("/public/plugins/jquery-validation/js/jquery.validate.min.js")}}" type="text/javascript"></script>
+<script src="{{asset("/public/plugins/jquery-validation/js/additional-methods.min.js")}}" type="text/javascript"></script>
 <style>
     .shift_left{
         margin-left:665px;

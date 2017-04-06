@@ -78,7 +78,7 @@
                 @endif
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading"><img src="{{asset("uploads/exedra.jpg")}}" style="width:100%"></div>
+                <div class="panel-heading"><img src="{{asset("/public/uploads/exedra.jpg")}}" style="width:100%"></div>
                 <div class="sign_up_main">
                     <div class="sign_up_wrap" id="sign-up">Sign Up</div>
                     <div class="sign_up_link_wrap">
