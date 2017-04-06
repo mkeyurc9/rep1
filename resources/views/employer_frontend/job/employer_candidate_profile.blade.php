@@ -26,12 +26,12 @@
                     <label class="control-label col-md-3">Status
                     </label>
                     <div class="radio">
-                        <label>@if($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='P') Pending for Review @elseif($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='A') Active @elseif($mat_algo['candidate_status']=='D' && $mat_algo['employer_status']=='D') Processed @elseif($mat_algo['candidate_status']=='S' && $mat_algo['employer_status']=='S') Successfull @else Rejected @endif</label>
+                        <label>@if($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='P') Pending for Review @elseif($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='A') Active @elseif($mat_algo['candidate_status']=='D' && $mat_algo['employer_status']=='D') Processed @elseif($mat_algo['candidate_status']=='S' && $mat_algo['employer_status']=='S') Successful @else Rejected @endif</label>
                     </div>
                 </div>
                 @if(($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='P')||($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='A'))
                 <div class="form-group">
-                    <label class="control-label col-md-3">Interested to proceed with interview ?</label>
+                    <label class="control-label col-md-3">@if($mat_algo['candidate_status']=='A' && $mat_algo['employer_status']=='P')Interested to proceed with interview ? @else Interviews Successful? @endif</label>
                     <div class="col-md-4">
                     <select class="form-control" name="employer_job_status" id="employer_job_status">
                         <option value="">--Select--</option>

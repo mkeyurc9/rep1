@@ -68,11 +68,10 @@
                     <div class="radio">
                         
                         @foreach($pm_experiences as $pm_experience)
-                                @php
+                               @php
                                     $checked='';
                                 @endphp
-                                
-                                @if(is_null($pm_exp))
+                                @if(is_null($pm_exp) && $pm_experience->id==1)
                                     @php
                                         $checked='checked';
                                     @endphp
@@ -80,8 +79,11 @@
                                     @php
                                         $checked='checked';
                                     @endphp
+                                @else
+                                @php
+                                    $checked='';
+                                @endphp 
                                 @endif
-                              
                                 <label><input type="radio" value="{{$pm_experience->id}}" name="pm_experience_in_years" {{$checked}} >{{$pm_experience->name}}</label>
                         @endforeach        
                     </div>
@@ -210,9 +212,6 @@ $(document).ready(function ()
             "interest_in[]":{
                     required: true, 
                     minlength: 1 
-            },
-            exclude_company: {
-                required: true,
             }
         },
         messages: {
@@ -229,7 +228,6 @@ $(document).ready(function ()
             resume:{                
                   extension:"Please only select pdf, doc, or docx file"
                   },
-            exclude_company: {required: "Please Enter Exclude Companies"},
         }
     });
 });

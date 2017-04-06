@@ -56,8 +56,9 @@ class MatchingAlgoController extends Controller {
     }
 
     function job_description(Request $request, $id) {
-        $matching_algo = MatchingAlgo::where('job_id', $id)
-                        ->with('employer_signup')->first();
+        $data = $request->session()->all();
+        $matching_algo = MatchingAlgo::where(['job_id'=>$id,'candidate_id'=>$data['id']])
+                                  ->with('employer_signup')->first();
         $job_description = \DB::table('job_details')->where('id', $id)->first();
         return view('frontend.matching_algo.job_description', ['mat_algo' => $matching_algo, 'job_description' => $job_description]);
     }

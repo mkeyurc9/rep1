@@ -15,7 +15,7 @@
                     <label class="control-label col-md-3">Profile Status
                     </label>
                     <div class="radio">
-                         @if($candidate_profile['peofile_status']== 'A') Active @else Deactivate @endif
+                         @if($candidate_profile['profile_status']=='A') Active @else Deactivate @endif
                     </div>
                 </div>
                 <div class="form-group">
@@ -48,7 +48,7 @@
                     <label class="control-label col-md-3">Job level
                     </label>
                     <div class="radio">
-                        {{$candidate_profile['job_level']}}
+                        {{ucfirst($candidate_profile['job_level'])}}
                     </div>
                 </div>
                 <div class="form-group">
@@ -74,7 +74,11 @@
                     <label class="control-label col-md-3">Exclude Companies
                     </label>
                     <div class="radio">
+                        @if(!empty($candidate_profile['exclude_companies']))
                         {{$candidate_profile['exclude_companies']}}
+                        @else
+                        {{"N/A"}}
+                        @endif
                     </div>
                 </div>
                 <div class="form-group">
@@ -109,7 +113,7 @@
                     <label class="control-label col-md-3">Status
                     </label>
                     <div class="radio">
-                        {{$candidate_profile['status']}}
+                        {{ucfirst($candidate_profile['status'])}}
                     </div>
                 </div>
                 <div class="form-group">
