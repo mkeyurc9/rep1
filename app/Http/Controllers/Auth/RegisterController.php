@@ -244,12 +244,12 @@ class RegisterController extends Controller
         $email = $request->input('email');
         $password = md5($request->input('password'));
 //        \DB::enableQueryLog();
-        $candidate = Candidate::where(['email' => $email,'password' => $password])->first();
+        $candidate = Candidate::where(['email' => $email,'password' => $password, 'is_activated' => '1'])->first();
 //        print_r(\DB::getQueryLog());exit;
         if(!$candidate){
-            $employer = Employer::where(['email' => $email,'password' => $password])->first();
+            $employer = Employer::where(['email' => $email,'password' => $password, 'is_activated' => '1'])->first();
             if(!$employer) {
-                Session::flash('message', 'Invalid password or Email');
+                Session::flash('message', 'Invalid Email/Password OR Inactive Account. Please check your email if you have already signed up to activate your account');
                 return redirect('login');
             }else {
                 //employer session

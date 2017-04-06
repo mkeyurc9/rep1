@@ -6,7 +6,7 @@
         margin-left:665px;
     }
     .session_left{
-        width:40%;margin-bottom: 20px; text-align: center;
+        margin: 10px auto; text-align: center;
     }
 </style>
 <div class="row">
