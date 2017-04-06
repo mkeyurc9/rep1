@@ -4,8 +4,8 @@
         margin-left: 341px;
     }
 </style>
-<script src="{{asset("/public/plugins/jquery-validation/js/jquery.validate.min.js")}}" type="text/javascript"></script>
-<script src="{{asset("/public/plugins/jquery-validation/js/additional-methods.min.js")}}" type="text/javascript"></script>
+<script src="{{asset("/plugins/jquery-validation/js/jquery.validate.min.js")}}" type="text/javascript"></script>
+<script src="{{asset("/plugins/jquery-validation/js/additional-methods.min.js")}}" type="text/javascript"></script>
 <div class="row">
     <div class="portlet-body">
         <form method="post" class="form-horizontal" id="candidate_profile_add" action="{{url('insert_candidate_profile')}}" enctype="multipart/form-data" files=true>
@@ -116,7 +116,7 @@
                     <label class="control-label col-md-3">Resume
                     </label>
                     <div class="radio">
-                        <a href="{{ asset('/public/upload_resume/'.$candidate_profile['resume'])}}" target="_blank">View Resume</a>
+                        <a href="{{ asset('/upload_resume/'.$candidate_profile['resume'])}}" target="_blank">View Resume</a>
                     </div>
                 </div>
             </div>
