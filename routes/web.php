@@ -50,3 +50,13 @@ Route::group(['middleware'=>['checkAuth:employer']],function(){
     Route::post('update_employer_candidate_profile/{id}','employer_frontend\JobController@update_employer_candidate_profile');
 });
  Route::get('user_logout','Auth\RegisterController@user_logout');
+
+  //for static page
+
+  Route::get('terms',function(){
+    return view('static.termsandcondition');
+  });
+
+    Route::get('policy',function(){
+    return view('static.policy');
+  });

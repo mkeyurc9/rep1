@@ -82,7 +82,7 @@
                 <div class="form-actions">
                     <div class="row">
                         <div class="col-md-offset-3 col-md-9">
-                            <strong>By Signing up you agree to Terms and Privacy Policy</strong><br>
+                            <strong>By Signing up you agree to <a href="{{ url('terms') }}" target="_blank">Terms</a> and <a href="{{ url('policy') }}" target="_blank"> Privacy Policy </a></strong><br>
                             <button type="submit" name="cmdSubmit" value="submit" class="btn green">Submit</button>
                             <a href="{{url('/')}}" class="btn grey-salsa btn-outline">Cancel</a>
                         </div>
