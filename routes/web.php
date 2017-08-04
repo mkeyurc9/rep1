@@ -25,6 +25,11 @@ Route::get('employer/register','Auth\RegisterController@employer_register');
 Route::post('employer/sign_up','Auth\RegisterController@employer_insert_data');
 Route::get('employer_register/verify/{token}','Auth\RegisterController@confirm_registration_employer');
 
+//changes admin login
+Route::get('admin/login','Auth\RegisterController@admin_login');
+Route::post('admin_panel_login','Auth\RegisterController@admin_panel_login');
+///////
+
 Route::get('view_login','Auth\RegisterController@view_login');
 Route::post('user_login','Auth\RegisterController@user_login');
 Route::get('set_password/{type}/{id}/{token}','Auth\ForgotPasswordController@reset_password');
@@ -60,3 +65,8 @@ Route::group(['middleware'=>['checkAuth:employer']],function(){
     Route::get('policy',function(){
     return view('static.policy');
   });
+//for admin panel
+
+      Route::get('admin', function () {
+    return view('jobzerda_admin/admin_template');
+});

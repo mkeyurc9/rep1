@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use App\Model\Candidate as Candidate;
 use App\Model\Employer as Employer;
+use App\User;
 
 
 class ForgotPasswordController extends Controller
@@ -45,6 +46,11 @@ class ForgotPasswordController extends Controller
       $email = $request->input('email');
       $c_data = Candidate::where('email',$email)->first();
       $e_data = Employer::where('email',$email)->first();
+
+      //changes for admin reset password
+
+      $u_data = User::where('email',$email)->first();
+
       $template = 'auth/emails.password';
       $data['token'] = $token = str_random(40);
       $data['email'] = $email;
@@ -58,7 +64,9 @@ class ForgotPasswordController extends Controller
             Candidate::where('candidate_id', $data['id'])->update(['token'=>$token]);
             Session::flash('message', 'Send Forgot password Link to your email');
             return redirect('view_login');
-      }else{       
+      }
+      elseif($e_data)
+      {       
             $data['id'] = $e_data->employer_id;
             $data['firstname'] = $e_data->firstname;
             $data['lastname'] = $e_data->lastname;
@@ -68,6 +76,17 @@ class ForgotPasswordController extends Controller
             Session::flash('message', 'Send Forgot password Link to your email');
             return redirect('view_login');
       }
+      elseif($u_data)
+      {
+            $data['id'] = $u_data->id;
+            $data['firstname'] = $u_data->name;
+            $data['lastname'] = '';
+            $data['type'] = 'admin';
+            send_email($data,$template);
+            User::where('id', $data['id'])->update(['remember_token'=>$token]);
+            Session::flash('message', 'Send Forgot password Link to your email');
+            return redirect('admin/login');
+      }
     }
     
     function reset_password($type,$id,$token){
@@ -75,11 +94,19 @@ class ForgotPasswordController extends Controller
            $user=Candidate::where('candidate_id',$id)
                      ->where('token',$token)
                      ->first();
-      } else {
+      } 
+      elseif($type=='employer')
+      {
            $user=Employer::where('employer_id',$id)
                     ->where('token',$token)
                     ->first();
       } 
+      elseif($type=='admin')
+      {
+        $user=User::where('id',$id)
+                    ->where('remember_token',$token)
+                    ->first();
+      }
       return view('auth.passwords.reset',['type'=>$type,'token'=>$token,'id'=>$id,'user'=>$user]); 
     }
     function password_update(Request $request){
@@ -90,12 +117,21 @@ class ForgotPasswordController extends Controller
            Candidate::where('candidate_id',$id)
                      ->where('token',$token)
                      ->update(['token'=>NULL,'password'=>$password]);
-       }else{  
+       }
+       elseif($request->input('type')=='employer')
+       {  
            Employer::where('employer_id',$id)
                     ->where('token',$token)
                     ->update(['token'=>NULL,'password'=>$password]);
        }
+      elseif($request->input('type')=='admin')
+       {  
+           User::where('id',$id)
+           ->where('remember_token',$token)
+                    ->update(['remember_token'=>NULL,'password'=>$password]);
+       }
        Session::flash('message', 'Password updated Successfully');
        return redirect('/');
-    }
+
+}
 }

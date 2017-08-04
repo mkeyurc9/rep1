@@ -229,6 +229,33 @@ class RegisterController extends Controller
 
         return redirect('/');
     }
+
+    //for the admin_login
+    //chagnes for admin panel
+        function admin_login(){
+        return view('jobzerda_admin.admin_login');
+    }
+
+    function admin_panel_login(Request $request)
+    {
+        $email = $request->input('email');
+        $password = md5($request->input('password'));
+//        \DB::enableQueryLog();
+
+        $user=User::where(['email' => $email,'password' => $password])->first();
+        if(!$user) 
+        {
+            Session::flash('message', 'Invalid Email/Password OR Inactive Account. Please check your email if you have already signed up to activate your account');
+                    return redirect('admin/login');
+        }
+        else 
+        {   
+                    //employer session
+            session(['email'=> $email,'id'=>$user['id'], 'user_type'=> 'admin']);
+                 return redirect('admin');
+        }
+   
+    }
     /**
     *view_login
     * 
