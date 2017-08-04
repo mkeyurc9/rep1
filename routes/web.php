@@ -65,8 +65,15 @@ Route::group(['middleware'=>['checkAuth:employer']],function(){
     Route::get('policy',function(){
     return view('static.policy');
   });
-//for admin panel
 
-      Route::get('admin', function () {
+
+//for the admin panel 
+
+Route::group(['middleware'=>['checkAuth:admin']],function()
+{
+  //for accesign the admin panel
+  Route::get('admin', function () 
+  {
     return view('jobzerda_admin/admin_template');
+  });
 });
