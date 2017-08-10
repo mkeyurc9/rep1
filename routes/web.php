@@ -25,12 +25,19 @@ Route::get('employer/register','Auth\RegisterController@employer_register');
 Route::post('employer/sign_up','Auth\RegisterController@employer_insert_data');
 Route::get('employer_register/verify/{token}','Auth\RegisterController@confirm_registration_employer');
 
-//changes admin login
+
+Route::get('admin/register','Auth\RegisterController@admin_register');
+// Route::post('employer/sign_up','Auth\RegisterController@employer_insert_data');
+// Route::get('employer_register/verify/{token}','Auth\RegisterController@confirm_registration_employer');
+
+
+
+
+Route::get('view_login','Auth\RegisterController@view_login');
+//changes
 Route::get('admin/login','Auth\RegisterController@admin_login');
 Route::post('admin_panel_login','Auth\RegisterController@admin_panel_login');
 ///////
-
-Route::get('view_login','Auth\RegisterController@view_login');
 Route::post('user_login','Auth\RegisterController@user_login');
 Route::get('set_password/{type}/{id}/{token}','Auth\ForgotPasswordController@reset_password');
 Route::post('password_update','Auth\ForgotPasswordController@password_update');
@@ -54,26 +61,26 @@ Route::group(['middleware'=>['checkAuth:employer']],function(){
     Route::get('employer_candidate_profile/{id}','employer_frontend\JobController@employer_candidate_profile');
     Route::post('update_employer_candidate_profile/{id}','employer_frontend\JobController@update_employer_candidate_profile');
 });
- Route::get('user_logout','Auth\RegisterController@user_logout');
-
-  //for static page
-
-  Route::get('terms',function(){
-    return view('static.termsandcondition');
-  });
-
-    Route::get('policy',function(){
-    return view('static.policy');
-  });
-
 
 //for the admin panel 
 
-Route::group(['middleware'=>['checkAuth:admin']],function()
-{
-  //for accesign the admin panel
-  Route::get('admin', function () 
-  {
+Route::group(['middleware'=>['checkAuth:admin']],function(){
+      Route::get('admin', function () {
     return view('jobzerda_admin/admin_template');
-  });
 });
+    Route::get('admin/list_canditate','admin_frontend\backendController@getuser');
+    Route::get('admin/filter_canditate','admin_frontend\backendController@filter_user');
+});
+    
+
+
+ Route::get('user_logout','Auth\RegisterController@user_logout');
+ Route::get('matchcron','MatchController@matchcron');
+
+
+ //for static page
+
+  Route::get('terms',function(){
+    return view('static.termscondition');
+  });
+
