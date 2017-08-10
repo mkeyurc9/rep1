@@ -3,7 +3,7 @@
 <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo"><b>Admin</b>JobZedra</a>
+    <a href="{{url('admin')}}" class="logo"><b>Admin</b>JobZedra</a>
 
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -18,12 +18,10 @@
                         <!-- The user image in the navbar-->
                     
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
+
                     <a href="{{ url('user_logout') }}" class="btn btn-primary">Sign Out</a> 
 
-                    </a>
-
-
-        </div>
+        </div>  
     </nav>
 </header>
     </html>
