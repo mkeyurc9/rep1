@@ -84,3 +84,6 @@ Route::group(['middleware'=>['checkAuth:admin']],function(){
     return view('static.termscondition');
   });
 
+  Route::get('policy',function(){
+    return view('static.policy');
+  });
