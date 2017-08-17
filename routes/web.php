@@ -70,6 +70,8 @@ Route::group(['middleware'=>['checkAuth:admin']],function(){
 });
     Route::get('admin/list_canditate','admin_frontend\backendController@getuser');
     Route::get('admin/filter_canditate','admin_frontend\backendController@filter_user');
+    Route::get('admin/candidate_profile','admin_frontend\CandidateProfileController@get_candidate');
+    Route::get('admin/filter_status_canditate','admin_frontend\CandidateProfileController@filter_candidate');
 });
     
 

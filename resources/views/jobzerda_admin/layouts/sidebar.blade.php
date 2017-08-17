@@ -2,6 +2,7 @@
     <section class="sidebar">
         <ul class="sidebar-menu">
             <li class="active"><a href="{{url('admin/list_canditate')}}"><span>Candidate List</span></a></li>
+            <li class="active"><a href="{{url('admin/candidate_profile')}}"><span>Candidate Profiles</span></a></li>
                 <ul class="treeview-menu">
                     <li><a href="#">Link in level 2</a></li>
                     <li><a href="#">Link in level 2</a></li>

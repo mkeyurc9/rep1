@@ -37,7 +37,11 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
-
+          @if(Session::has('message'))
+          <p style="color:red;">
+                {{Session::get('message')}}
+          </p>
+          @endif
     <form action="../../index2.html" method="post">
       <div class="form-group has-feedback">
         <input name="email"  value="{{old('email')}}" type="text" class="form-control" />

@@ -245,7 +245,7 @@ class RegisterController extends Controller
         $user=User::where(['email' => $email,'password' => $password])->first();
         if(!$user) 
         {
-            Session::flash('message', 'Invalid Email/Password OR Inactive Account. Please check your email if you have already signed up to activate your account');
+            Session::flash('message', 'Invalid Email/Password');
                     return redirect('admin/login');
         }
         else 
