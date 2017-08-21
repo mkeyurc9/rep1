@@ -74,6 +74,9 @@
               </div>
             </div>
 
+            <?php  
+//for the  serial numner
+            $count = 1; ?>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
@@ -91,7 +94,7 @@
                 @foreach($users as $user)
 
                 <tr>
-                  <td>{{$loop->index+1}}</td>
+                  <td>{{ (($users->currentPage() - 1 ) * $users->perPage() ) + $count}}</td>
                   <td> <a href="{{ asset('/upload_resume/'.$user->resume)}}" target="_blank">View Resume</a></td>
                   <td>{{$user->c_F}}&nbsp;{{$user->c_L}}</td>
                   <td>{{$user->e_F}}&nbsp;{{$user->e_L}}</td>
@@ -118,9 +121,10 @@
                     <td>Processed</td>
                     <td>Processed</td>
                   @endif
-                  <td>{{ date('Y-m-d', strtotime($user->s_Date)) }}</td>
+                  <td>{{  date('m/d/Y', strtotime($user->s_Date)) }}</td>
 
                 </tr>
+                <?php $count++; ?>
               @endforeach
               @endif
               </table>

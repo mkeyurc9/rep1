@@ -38,6 +38,9 @@
               </div>
             </div>
 
+            <?php  
+//for the  serial numner
+            $count = 1; ?>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
@@ -55,7 +58,7 @@
                 @foreach($users as $user)
 
                 <tr>
-                  <td>{{$loop->index+1}}</td>
+                  <td>{{ (($users->currentPage() - 1 ) * $users->perPage() ) + $count}}</td>
                   <td>{{$user->c_F}}&nbsp;{{$user->c_L}}</td>
                    <td>{{$user->email}}</td>
                    <td>{{$user->phone}}</td>
@@ -65,6 +68,7 @@
                   <td>{{ date('m/d/Y', strtotime($user->updated_at)) }}</td>
 
                 </tr>
+                 <?php $count++; ?>
               @endforeach
               @endif
               </table>
