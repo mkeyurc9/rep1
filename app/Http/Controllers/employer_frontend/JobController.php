@@ -80,7 +80,7 @@ class JobController extends Controller {
         //\DB::enableQueryLog();
         $jobs = \DB::table('job_details as jd')->where('employer_id',$data['id'])
                            ->select(\DB::raw("*, (SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id 
-AND candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id AND candidate_status= 'A'AND employer_status='A') as active_in_interview_phase,(SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id AND candidate_status= 'D'AND employer_status='D') as candidates_not_considered,(SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id AND candidate_status= 'D'AND employer_status='R') as candidates_rejected"))
+AND candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id AND candidate_status= 'A'AND employer_status='A') as active_in_interview_phase,(SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id AND candidate_status= 'D'AND employer_status='D') as candidates_not_considered,(SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id AND candidate_status= 'D'AND employer_status='R') as candidates_rejected,(SELECT COUNT(1) FROM matching_algo_status WHERE job_id = jd.id AND candidate_status= 'S'AND employer_status='S') as candidate_success"))
                            ->orderby('created_at','desc')
                            ->paginate(10);
         //print_r(\DB::getQueryLog());exit;
@@ -144,6 +144,18 @@ AND candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT
             'created_at' => $old_data['created_at'],
             'updated_at' => date('Y-m-d H:i:s')
         );
+
+        //made changes
+        if($request['withdraw_job_submission']==1)
+        {
+            $job_close=array(
+                'job_id'=>$id,
+                'flag'=>'W',
+                'created_at' => date('Y-m-d H:i:s')
+                );
+            \DB::table('job_closed')->insert([$job_close]);
+
+        }
         JobDetails::where('id', $id)->update($job_details);
         return redirect('view_add_job');
     }
@@ -173,14 +185,14 @@ AND candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT
         return view('employer_frontend.job.view_employer_job', ['success' => $success,'rejected' => $rejected, 'process' => $process, 'pending' => $pending, 'active' => $active, 'job' => $job, 'domains' => $product_management_type, 'pm_experiences' => $pm_experiences]);
     }
 
-    function employer_candidate_profile($id) {
+    function employer_candidate_profile($id,$jobid) {
         $matching_algo = MatchingAlgo::where('id', $id)
                         ->with('candidate_signup')->first();
         $candidate = Candidate::where('candidate_id', $matching_algo['candidate_signup'][0]['candidate_id'])->with('profile')->first();
-        return view('employer_frontend.job.employer_candidate_profile', ['candidate'=>$candidate,'mat_algo' => $matching_algo]);
+        return view('employer_frontend.job.employer_candidate_profile', ['candidate'=>$candidate,'mat_algo' => $matching_algo,'job'=>$jobid]);
     }
 
-    function update_employer_candidate_profile(Request $req,$id) {
+    function update_employer_candidate_profile(Request $req,$id,$jobid) {
         $this->validate($req, [
             'employer_status' => 'required'
         ]);
@@ -202,8 +214,20 @@ AND candidate_status= 'A'AND employer_status='P') as cnt_pending_review, (SELECT
             $data['candidate_status'] = 'D';
             $data['employer_status'] = 'D';
         }
+
         MatchingAlgo::where('id', $id)->update($data);
-        return redirect('employer_candidate_profile/'.$id);
+
+        //made changes 
+        if($data['candidate_status'] =='S' && $data['employer_status'] =='S')
+        {
+              $job_close=array(
+                'job_id'=>$jobid,
+                'flag'=>'S',
+                'created_at' => date('Y-m-d H:i:s')
+                );
+            \DB::table('job_closed')->insert([$job_close]);
+        }
+        return redirect('employer_candidate_profile/'.$id.'/'.$jobid);
     }
 
 }

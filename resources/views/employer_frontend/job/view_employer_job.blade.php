@@ -90,7 +90,7 @@
                     @foreach($pending as $pnd)
                     @foreach($pnd['candidate_signup'] as $c_d)
                     <br>
-                    <a href="{{url('employer_candidate_profile/'.$pnd['id'])}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>                         
+                    <a href="{{url('employer_candidate_profile/'.$pnd['id'].'/'.$job->id)}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>                            
                     @endforeach
                     @endforeach
                     @else
@@ -104,7 +104,7 @@
                     @foreach($active as $pnd)
                     @foreach($pnd['candidate_signup'] as $c_d)
                     <br>
-                    <a href="{{url('employer_candidate_profile/'.$pnd['id'])}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>
+                  <a href="{{url('employer_candidate_profile/'.$pnd['id'].'/'.$job->id)}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>         
                     @endforeach
                     @endforeach
                     @else
@@ -118,7 +118,7 @@
                         @foreach($process as $pnd)
                         @foreach($pnd['candidate_signup'] as $c_d)
                         <br>
-                        <a href="{{url('employer_candidate_profile/'.$pnd['id'])}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>
+                       <a href="{{url('employer_candidate_profile/'.$pnd['id'].'/'.$job->id)}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>         
                         @endforeach
                         @endforeach
                         @else
@@ -132,7 +132,7 @@
                     @foreach($rejected as $pnd)
                     @foreach($pnd['candidate_signup'] as $c_d)
                     <br>
-                    <a href="{{url('employer_candidate_profile/'.$pnd['id'])}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>
+                   <a href="{{url('employer_candidate_profile/'.$pnd['id'].'/'.$job->id)}}">{{$c_d['firstname']." ".$c_d['lastname']}}</a>         
                     @endforeach
                     @endforeach
                     @else  
