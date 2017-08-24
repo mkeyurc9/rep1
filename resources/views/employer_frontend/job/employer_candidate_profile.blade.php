@@ -3,7 +3,7 @@
 <script src="{{asset("/plugins/jquery-validation/js/additional-methods.min.js")}}" type="text/javascript"></script>
 <div class="row">
     <div class="portlet-body">
-        <form method="post" class="form-horizontal" id="candidate_profile_add" action="{{url('update_employer_candidate_profile/'.$mat_algo['id'])}}" enctype="multipart/form-data" files=true>
+        <form method="post" class="form-horizontal" id="candidate_profile_add" action="{{url('update_employer_candidate_profile/'.$mat_algo['id'].'/'.$job)}}"enctype="multipart/form-data" files=true>
             {{ csrf_field() }}
             @if (count($errors) > 0)
             <div class="alert alert-danger">
