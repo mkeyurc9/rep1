@@ -89,3 +89,24 @@ Route::group(['middleware'=>['checkAuth:admin']],function(){
   Route::get('policy',function(){
     return view('static.policy');
   });
+
+Route::get('payPremium', ['as'=>'payPremium','uses'=>'AddMoneyController@payPremium']);
+Route::post('getCheckout', ['as'=>'getCheckout','uses'=>'AddMoneyController@getCheckout']);
+Route::get('getDone', ['as'=>'getDone','uses'=>'AddMoneyController@getDone']);
+Route::get('getCancel', ['as'=>'getCancel','uses'=>'AddMoneyController@getCancel']);
+Route::get('getwebprofile','AddMoneyController@createWebProfile');
+
+
+//for payment
+
+
+
+//for the payment
+
+Route::get('candidate_payment',array('as'=>'candidatepay.canddidate_payment','uses'=>'employer_frontend\PaymentController@getlist',));
+
+
+Route::get('getCheckout/{paymentdue}/{empid}/{candidateid}/{jobid}/{paymentbaseid}/{paymentsetting}/{payment}/{final_remain_payment}', ['as'=>'getCheckout','uses'=>'AddMoneyController@getCheckout']);
+Route::get('getDone', ['as'=>'getDone','uses'=>'AddMoneyController@getDone']);
+Route::get('getCancel', ['as'=>'getCancel','uses'=>'AddMoneyController@getCancel']);
+Route::get('getwebprofile','AddMoneyController@createWebProfile');
