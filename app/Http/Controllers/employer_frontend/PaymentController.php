@@ -16,6 +16,7 @@ class PaymentController extends Controller
                               'payment_complete'=>0,
                               'payment_base.employer_id'=>$employer_id,
                               );
+            
 		$users = DB::table('payment_base')
             ->join('candidate_signup', 'candidate_signup.candidate_id', '=', 'payment_base.candidate_id')
 
@@ -48,6 +49,16 @@ class PaymentController extends Controller
                               );
             $data = DB::table("payment_made")->where($condition)->sum('paid');
             return $data;
+
+      }
+
+      public function getpaymentcount($payment_base_id)
+      {
+            $condition=array(
+                              'payment_base_id'=>$payment_base_id
+                              );
+            $payment_made = DB::table('payment_made')->WHERE($condition)->count();
+            return $payment_made;
 
       }
       public function gegidpaypmentprepocessing()

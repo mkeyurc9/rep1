@@ -19,6 +19,8 @@
             <?php  $paid=app(App\Http\Controllers\employer_frontend\PaymentController::class)->getremainfees($user->payment_base_id,$user->payment); 
                 $payment_due=0;
 
+              $paymentcount=app(App\Http\Controllers\employer_frontend\PaymentController::class)->getpaymentcount($user->payment_base_id);
+                $payment_due=0;
             ?>
 
           
@@ -35,6 +37,7 @@
                     {
 
                        $cal_installment=$user->payment/3;
+                      $cal_installment=floor($cal_installment);
                        if($paymentremain!=$cal_installment)
                        {
                             $payment_due=$cal_installment;
@@ -59,8 +62,16 @@
 
                     if($user->paymentsetting=='I')
                     {
-
+                      if($paymentcount==1)
+                      {
                        $cal_installment=$user->payment/3;
+                        $cal_installment=floor($cal_installment);
+
+                      }
+                     else
+                     {
+                        $cal_installment=$user->payment-$paid;
+                     }
                        if($paymentremain!=$cal_installment)
                        {
                             $payment_due=$cal_installment;
@@ -69,13 +80,17 @@
                        {
                             $payment_due=$paymentremain;
                        }
+
                     }
                     $final_remain_payment=$user->payment-$payment_due;
                     ?>
 
                     <td>{{$user->payment-$paid}}</td>
                  @endif
-                 <td><button><!-- <a href="{{url('getCheckout/'.$payment_due.'/'.$user->empid.'/'.$user->candidid.'/'.$user->jobid.'/'.$user->payment_base_id.'/'.$user->paymentsetting.'/'.$user->payment.'/'.$final_remain_payment)}}" >-->Make Payment</a></button></td>
+                 <td><button>
+                 <!-- <a href="{{url('getCheckout/'.$payment_due.'/'.$user->empid.'/'.$user->candidid.'/'.$user->jobid.'/'.$user->payment_base_id.'/'.$user->paymentsetting.'/'.$user->payment.'/'.$final_remain_payment)}}"> -->Make Payment
+                 <!-- </a> -->
+                 </button></td>
                 </tr>
                 @endforeach
             </tbody>             
