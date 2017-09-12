@@ -69,6 +69,7 @@
                             @else
                                 <li><a href="{{ url('add_job') }}">Add Jobs </a></li>
                                 <li><a href="{{url('view_add_job')}}">View Jobs </a></li>
+                                 <li><a href="{{url('candidate_payment')}}">Payment </a></li>
                             @endif
                         @else
                         <li><a href="{{ url('view_login') }}">Sign in</a></li>
