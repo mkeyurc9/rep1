@@ -88,8 +88,7 @@
                     <td>{{$user->payment-$paid}}</td>
                  @endif
                  <td><button>
-                 <!-- <a href="{{url('getCheckout/'.$payment_due.'/'.$user->empid.'/'.$user->candidid.'/'.$user->jobid.'/'.$user->payment_base_id.'/'.$user->paymentsetting.'/'.$user->payment.'/'.$final_remain_payment)}}"> -->Make Payment
-                 <!-- </a> -->
+                 Make Payment
                  </button></td>
                 </tr>
                 @endforeach
