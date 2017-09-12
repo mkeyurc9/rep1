@@ -41,7 +41,39 @@ class PaymentController extends Controller
 
 		return view('employer_frontend/payment/candidate_for_payment',['users'=>$users]);
 	}
-      public function getremainfees($payment_base_id,$payment)
+        public function getuserinfo($paymnetbaseid)
+      {
+            $employer_id = Session('id');
+
+
+            $condition=array(
+                              'payment_complete'=>0,
+                              'payment_base.employer_id'=>$employer_id,
+                              'payment_base.id'=>$paymnetbaseid,
+                              );
+            $user = DB::table('payment_base')
+            ->join('candidate_signup', 'candidate_signup.candidate_id', '=', 'payment_base.candidate_id')
+
+            ->join('matching_algo_status', 'matching_algo_status.id', '=', 'payment_base.matching_algo_status_id')
+            ->select('candidate_signup.firstname as c_F',
+                  'candidate_signup.lastname as c_L',
+                  'payment_base.total_payment as payment',
+                  'matching_algo_status.updated_at as hiredate',
+                  'payment_base.id as payment_base_id',
+                  'payment_base.employer_id as empid',
+                  'payment_base.candidate_id as candidid',
+                  'payment_base.job_id as jobid',
+                  'payment_base.payment_setting as paymentsetting'
+
+             )
+            ->WHERE($condition)
+            ->get();
+            return $user;
+
+      }
+
+
+      public function getremainfees($payment_base_id)
       {
 
             $condition=array(

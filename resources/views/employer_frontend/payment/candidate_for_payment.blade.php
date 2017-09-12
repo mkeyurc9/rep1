@@ -16,7 +16,7 @@
 
             @foreach($users as $user)
 
-            <?php  $paid=app(App\Http\Controllers\employer_frontend\PaymentController::class)->getremainfees($user->payment_base_id,$user->payment); 
+            <?php  $paid=app(App\Http\Controllers\employer_frontend\PaymentController::class)->getremainfees($user->payment_base_id); 
                 $payment_due=0;
 
               $paymentcount=app(App\Http\Controllers\employer_frontend\PaymentController::class)->getpaymentcount($user->payment_base_id);
@@ -88,7 +88,9 @@
                     <td>{{$user->payment-$paid}}</td>
                  @endif
                  <td><button>
+                 
                  Make Payment
+
                  </button></td>
                 </tr>
                 @endforeach

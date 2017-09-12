@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Input;
 // use PayPal\Api\Transaction;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\employer_frontend\PaymentController;
 use Paypal;
 use Redirect;
 use URL;
@@ -54,17 +55,80 @@ class AddMoneyController extends HomeController
         // $this->getCheckout($payment);
     }
 
-    public function getCheckout($paymentdue,$empid,$candidateid,$jobid,$paymentbaseid,$paymentsetting,$totalpayment,$finalreaminpayment)
+     public function getCheckout($paymentbaseid)
     {
+
+        $paid=app(PaymentController::class)->getremainfees($paymentbaseid); 
+        $user=app(PaymentController::class)->getuserinfo($paymentbaseid); 
+        $paymentcount=app(PaymentController::class)->getpaymentcount($paymentbaseid);
+        //for the calculation of the payment due
+
+        if($paid==0)
+        {
+            $paymentremain=$user[0]->payment;
+            
+            if($user[0]->paymentsetting=='I')
+            {
+
+                $cal_installment=$user[0]->payment/3;
+                $cal_installment=floor($cal_installment);
+                if($paymentremain!=$cal_installment)
+                {
+                    $payment_due=$cal_installment;
+                } 
+                else
+                {
+                    $payment_due=$paymentremain;
+                }
+            }
+            else
+            {
+                $payment_due=$paymentremain;
+            }
+            $final_remain_payment=$user[0]->payment-$payment_due;
+
+        }
+
+        else
+        {
+
+            $paymentremain=$user[0]->payment-$paid;
+            
+            if($user[0]->paymentsetting=='I')
+            {
+                if($paymentcount==1)
+                {
+                    $cal_installment=$user[0]->payment/3;
+                    $cal_installment=floor($cal_installment);
+                }
+                else
+                {
+                    $cal_installment=$user[0]->payment-$paid;
+                }
+                if($paymentremain!=$cal_installment)
+                {
+                    $payment_due=$cal_installment;
+                } 
+                else
+                {
+                    $payment_due=$paymentremain;
+                }
+
+            }
+            $final_remain_payment=$user[0]->payment-$payment_due;
+
+        }
+
+
 
 
         $payment_preprocessing = array(
-            'employer_id' => $empid,
-            'candidate_id' => $candidateid,
-            'job_id' => $jobid,
-            'payment_base_id' => $paymentbaseid,
-            'payment_setting' => $paymentsetting,
-            'paid' => $paymentdue,
+            'employer_id' => $user[0]->empid,
+            'candidate_id' => $user[0]->candidid,
+            'job_id' => $user[0]->jobid,
+            'payment_base_id' => $user[0]->payment_base_id,
+            'payment_setting' => $user[0]->paymentsetting,
+            'paid' => $payment_due,
             'payment_status' => 'Pending',
             'transaction_id' =>'',
             'response' => '',
@@ -72,9 +136,8 @@ class AddMoneyController extends HomeController
             'updated_at' => date('Y-m-d H:i:s')
     
         );
+
         DB::table('payment_preprocessing')->insert($payment_preprocessing);
-
-
 
         $payer = PayPal::Payer();
         $payer->setPaymentMethod('paypal');
@@ -87,11 +150,11 @@ class AddMoneyController extends HomeController
 
         $amount = PayPal:: Amount();
         $amount->setCurrency('USD');
-        $amount->setTotal($paymentdue);
+        $amount->setTotal($payment_due);
 
         $transaction = PayPal::Transaction();
         $transaction->setAmount($amount);
-        $transaction->setDescription('Payment Amount '.$paymentdue);
+        $transaction->setDescription('Payment Amount '.$payment_due);
 
         $redirectUrls = PayPal:: RedirectUrls();
         $redirectUrls->setReturnUrl(route('getDone'));
