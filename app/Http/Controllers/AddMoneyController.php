@@ -55,7 +55,7 @@ class AddMoneyController extends HomeController
         // $this->getCheckout($payment);
     }
 
-     public function getCheckout($paymentbaseid)
+  public function getCheckout($paymentbaseid)
     {
 
         $paid=app(PaymentController::class)->getremainfees($paymentbaseid); 
@@ -118,26 +118,26 @@ class AddMoneyController extends HomeController
             $final_remain_payment=$user[0]->payment-$payment_due;
 
         }
-
-
-
-
-        $payment_preprocessing = array(
-            'employer_id' => $user[0]->empid,
-            'candidate_id' => $user[0]->candidid,
-            'job_id' => $user[0]->jobid,
-            'payment_base_id' => $user[0]->payment_base_id,
-            'payment_setting' => $user[0]->paymentsetting,
-            'paid' => $payment_due,
-            'payment_status' => 'Pending',
-            'transaction_id' =>'',
-            'response' => '',
-            'created_at' => date('Y-m-d H:i:s '),
-            'updated_at' => date('Y-m-d H:i:s')
-    
-        );
+        if (preg_match("/^\d+(\.\d+)?$/", $payment_due) && $payment_due!=0) 
+        {
+            $payment_preprocessing = array
+            (
+                'employer_id' => $user[0]->empid,
+                'candidate_id' => $user[0]->candidid,
+                'job_id' => $user[0]->jobid,
+                'payment_base_id' => $user[0]->payment_base_id,
+                'payment_setting' => $user[0]->paymentsetting,
+                'paid' => $payment_due,
+                'payment_status' => 'Pending',
+                'transaction_id' =>'',
+                'response' => '',
+                'created_at' => date('Y-m-d H:i:s '),
+                'updated_at' => date('Y-m-d H:i:s')
+        
+            );
 
         DB::table('payment_preprocessing')->insert($payment_preprocessing);
+
 
         $payer = PayPal::Payer();
         $payer->setPaymentMethod('paypal');
@@ -170,7 +170,11 @@ class AddMoneyController extends HomeController
         $response = $payment->create($this->_apiContext);
         $redirectUrl = $response->links[1]->href;
 
-        return redirect()->to( $redirectUrl );
+        return redirect()->to( $redirectUrl ); 
+    }
+
+        Session::flash('error','Invalid Amount');
+        return redirect()->route('candidatepay.canddidate_payment');
     }
 
     public function createWebProfile(){
@@ -211,7 +215,8 @@ class AddMoneyController extends HomeController
         $paymentExecution->setPayerId($payer_id);
         $executePayment = $payment->execute($paymentExecution, $this->_apiContext);
 
-
+// echo '<pre>';
+// print_r($executePayment);exit;
 
         if ($executePayment->getState() == 'approved') { 
 
@@ -266,6 +271,70 @@ class AddMoneyController extends HomeController
 
 
         }
+        elseif($executePayment->getState() == 'failed')
+        {
+                $paymentpreprocessing=$this->getidpaypmentprepocessing();
+
+                $preprocessing=array
+                (
+                    'payment_status'=>'Failed',
+                    'transaction_id'=>$id,
+                    'response'=>serialize($executePayment),
+                    'updated_at' => date('Y-m-d H:i:s')
+                );
+
+                DB::table('payment_preprocessing')
+                    ->WHERE('id',$paymentpreprocessing->id)
+                    ->update($preprocessing);
+        }
+        elseif ($executePayment->getState() == 'canceled')
+        {
+             $paymentpreprocessing=$this->getidpaypmentprepocessing();
+
+                $preprocessing=array
+                (
+                    'payment_status'=>'Canceled',
+                    'transaction_id'=>$id,
+                    'response'=>serialize($executePayment),
+                    'updated_at' => date('Y-m-d H:i:s')
+                );
+
+                DB::table('payment_preprocessing')
+                    ->WHERE('id',$paymentpreprocessing->id)
+                    ->update($preprocessing);
+        }
+        elseif ($executePayment->getState() == 'expired')
+        {
+             $paymentpreprocessing=$this->getidpaypmentprepocessing();
+
+                $preprocessing=array
+                (
+                    'payment_status'=>'Expired',
+                    'transaction_id'=>$id,
+                    'response'=>serialize($executePayment),
+                    'updated_at' => date('Y-m-d H:i:s')
+                );
+
+                DB::table('payment_preprocessing')
+                    ->WHERE('id',$paymentpreprocessing->id)
+                    ->update($preprocessing);
+        }
+        elseif ($executePayment->getState() == 'pending')
+        {
+             $paymentpreprocessing=$this->getidpaypmentprepocessing();
+
+                $preprocessing=array
+                (
+                    'payment_status'=>'Pending',
+                    'transaction_id'=>$id,
+                    'response'=>serialize($executePayment),
+                    'updated_at' => date('Y-m-d H:i:s')
+                );
+
+                DB::table('payment_preprocessing')
+                    ->WHERE('id',$paymentpreprocessing->id)
+                    ->update($preprocessing);
+            }
         // \Session::put('error','Payment failed');
         // return Redirect::route('paypalpayment.paywithpaypal');
     }
