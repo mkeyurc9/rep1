@@ -18,6 +18,7 @@
                 <tr>
                     <th>Candidate Name<?php Session::get('error');?></th>
                     <th>Hire Date</th>
+                    <th>Payment Type</th>
                     <th>Total Placement Fee</th>
                     <th>Remaining Placement Fee</th>
                     <th>Payment</th>
@@ -39,6 +40,16 @@
 
                  <td>{{$user->c_F}}&nbsp;{{$user->c_L}}</td>
                  <td>{{date('m/d/Y', strtotime($user->hiredate))}}</td>
+                  <?php
+                 if($user->paymentsetting=='I')
+                 { ?>
+                    <td>Installment</td>
+                <?php  }
+                 else
+                 { ?>
+                     <td>Full</td>
+                <?php  }
+                 ?>
                  <td>{{$user->payment}}</td>
                  @if($paid==0)
 
@@ -97,10 +108,12 @@
                     $final_remain_payment=$user->payment-$payment_due;
                     ?>
 
-                    <td>{{$user->payment-$paid}}</td>
+                    <td>{{$user->payment}}</td>
                  @endif
                  <td><button>
+                  <a href="{{url('getCheckout/'.$user->payment_base_id)}}">
                  Make Payment
+                 </a>
                  </button></td>
                 </tr>
                 @endforeach

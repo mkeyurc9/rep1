@@ -166,7 +166,7 @@ class AddMoneyController extends HomeController
         $payment->setRedirectUrls($redirectUrls);
         $payment->setTransactions(array($transaction));
 
-        $payment->setExperienceProfileId("XP-54B7-ZCSF-25YE-WQ3E");
+        $payment->setExperienceProfileId("XP-VLYB-MQ6T-N95J-ASEP");
         $response = $payment->create($this->_apiContext);
         $redirectUrl = $response->links[1]->href;
 
@@ -265,8 +265,9 @@ class AddMoneyController extends HomeController
                     ->update($paymentbase_update);
 
                     }
-
-                return redirect()->route('candidatepay.canddidate_payment');
+                    Session::flash('success','Payment Made successfully..!!');
+                // return redirect()->route('candidatepay.canddidate_payment');
+                    return view('employer_frontend/payment/payment_successful');
 
 
 
@@ -334,6 +335,12 @@ class AddMoneyController extends HomeController
                 DB::table('payment_preprocessing')
                     ->WHERE('id',$paymentpreprocessing->id)
                     ->update($preprocessing);
+            }
+            else
+            {
+                 Session::flash('success','Payment Made successfully..!!');
+                // return redirect()->route('candidatepay.canddidate_payment');
+                    return view('employer_frontend/payment/payment_successful');
             }
         // \Session::put('error','Payment failed');
         // return Redirect::route('paypalpayment.paywithpaypal');
