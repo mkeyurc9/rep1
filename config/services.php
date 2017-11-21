@@ -39,8 +39,12 @@ return [
 //     'secret' => 'ENyeHS439UEkXIpq7atwGntc_5jWt_-mA_ubKFURKXdqr7fx7n4QWB7S03DRnmFdG-x1pujsCgWQ-9oo'
 
 // ],
-    'paypal' => [
-    'client_id' => 'AVX82e6y1NbVcQ68-k6kqb4dRW0AlXrRoMaGl_kXdKxkVcU_0PP0p4pQWZjFxB_7ri76PzccU3yq3Aw5',
-    'secret' => 'EGSOdqCdA8s-K4QCbEsRI2zABnHd2YkMaRHsuI7LRDX7Wol64v5UD8rIEtR3ade7u0rf8IrjMCtyJWlP'
+//     'paypal' => [
+//     'client_id' => 'AVX82e6y1NbVcQ68-k6kqb4dRW0AlXrRoMaGl_kXdKxkVcU_0PP0p4pQWZjFxB_7ri76PzccU3yq3Aw5',
+//     'secret' => 'EGSOdqCdA8s-K4QCbEsRI2zABnHd2YkMaRHsuI7LRDX7Wol64v5UD8rIEtR3ade7u0rf8IrjMCtyJWlP'
+// ],
+     'paypal' => [
+    'client_id' => 'AddFjEc7wuMjUjsaBzpSd-t7iGJ3LbfW0kqJ5CWRIXclq7jhklvFPH3Ir7WpeFMtK-VmXWXMRZ-HDTdN',
+    'secret' => 'EF6NaOHl9RADO3VgE3M9DGBH_nomErSxXgifHhuTMI0Lwg4hNJSU0datSRSLJrBLifAB8VT1C7Vz--xk'
 ],
 ];
