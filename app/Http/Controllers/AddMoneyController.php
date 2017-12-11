@@ -118,7 +118,7 @@ class AddMoneyController extends HomeController
             $final_remain_payment=$user[0]->payment-$payment_due;
 
         }
-        $payment_due=20;
+        // $payment_due=20;
         if (preg_match("/^\d+(\.\d+)?$/", $payment_due) && $payment_due!=0) 
         {
             $payment_preprocessing = array
@@ -211,20 +211,73 @@ class AddMoneyController extends HomeController
 
         $payment = PayPal::getById($id, $this->_apiContext);
 
+// echo '<pre>';
+// print_r($payment);exit;
         $paymentExecution = PayPal::PaymentExecution();
 
         $paymentExecution->setPayerId($payer_id);
         $executePayment = $payment->execute($paymentExecution, $this->_apiContext);
 
+
+$transactions = $executePayment->getTransactions();
+$resources = $transactions[0]->getRelatedResources();
+
+$sale = $resources[0]->getSale();
+//user this transacation id to save in the payment pre processing 
+$transactionid = $sale->getId();
 // echo '<pre>';
 // print_r($executePayment);exit;
 
         if ($executePayment->getState() == 'approved') { 
 
-               
-                    Session::flash('success','Payment Made successfully..!!');
-                    return view('employer_frontend/payment/payment_successful');
+                $paymentpreprocessing=$this->getidpaypmentprepocessing();
 
+                $preprocessing=array(
+                    'payment_status'=>'Completed',
+                    'transaction_id'=>$transactionid,
+                    'response'=>serialize($executePayment),
+                    'updated_at' => date('Y-m-d H:i:s')
+                    );
+
+                DB::table('payment_preprocessing')
+                    ->WHERE('id',$paymentpreprocessing->id)
+                    ->update($preprocessing);
+
+
+
+                    $paymentmade=array(
+                        'employer_id'=>$paymentpreprocessing->employer_id,
+                        'candidate_id'=>$paymentpreprocessing->candidate_id,
+                        'job_id'=>$paymentpreprocessing->job_id,
+                        'payment_base_id'=>$paymentpreprocessing->payment_base_id,
+                        'payment_preprocessing_id'=>$paymentpreprocessing->id,
+                        'payment_setting'=>$paymentpreprocessing->payment_setting,
+                        'paid'=>$paymentpreprocessing->paid,
+                        'created_at'=>date('Y-m-d H:i:s'),
+                        'updated_at'=>date('Y-m-d H:i:s'),
+                       );
+                    DB::table('payment_made')->insert($paymentmade);
+
+                    //for updating payment completed status in payment_base
+                    $condition=array(
+                              'payment_base_id'=>$paymentpreprocessing->payment_base_id
+                              );
+                    $payment_made = DB::table('payment_made')->WHERE($condition)->count();
+
+                    if($payment_made==3 || $paymentpreprocessing->payment_setting=='F')
+                    {
+                        $paymentbase_update=array(
+                            'payment_complete'=>1
+                            );
+
+                    DB::table('payment_base')
+                    ->WHERE('id',$paymentpreprocessing->payment_base_id)
+                    ->update($paymentbase_update);
+
+                    }
+                    Session::flash('success','Payment Made successfully..!!');
+                // return redirect()->route('candidatepay.canddidate_payment');
+                    return view('employer_frontend/payment/payment_successful');
 
 
         }

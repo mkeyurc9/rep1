@@ -77,7 +77,8 @@
                     $final_remain_payment=$user->payment-$payment_due;
    
                     ?>
-                    <td>{{$user->payment}}</td>
+                    <td>{{$user->payment-$paid}}</td>
+                    <!-- <td>{{$user->payment}}</td> -->
                  @else
 
                     <?php $paymentremain=$user->payment-$paid;?>
@@ -107,8 +108,8 @@
                     }
                     $final_remain_payment=$user->payment-$payment_due;
                     ?>
-
-                    <td>{{$user->payment}}</td>
+<td>{{$user->payment-$paid}}</td>
+                    <!-- <td>{{$user->payment}}</td> -->
                  @endif
                  <td><button>
                   <a href="{{url('getCheckout/'.$user->payment_base_id)}}">
